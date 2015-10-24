@@ -1,0 +1,94 @@
+body {
+  font-family: Arial, sans-serif;
+  overflow-y: hidden;
+}
+
+.titulo {
+  font-size: 4em;
+  text-transform: uppercase;
+  text-align: center;
+  background-color: #287369;
+  color: #FFF;
+  padding: 0.3em;
+  border-bottom: 10px solid #000;
+}
+
+.conteudo {
+  max-width: 60em;
+  margin: 0 auto;
+  padding-top: 1em;
+  text-align: center;
+  overflow: hidden;
+}
+
+.conteudo ul {
+  vertical-align: top;
+  width: 5em;
+}
+
+#player1 {
+  float: left;
+}
+
+#player1 li {
+  background: blue;
+}
+
+#player2 {
+  float: right;
+}
+
+#player2 li {
+  background: red;
+}
+
+.conteudo li {
+  display: inline-block;
+  cursor: pointer;
+  text-align: center;
+  color: white;
+}
+
+.fagos li {
+  border: 3px solid #eee;
+  border-radius: 3em;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 3em;
+  width: 3em;
+  height: 3em;
+  line-height: 3em;
+  font-size: 1.5em;
+}
+
+.noselect {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+#grid {
+  margin: 0 auto;
+  padding: 0;
+  height: auto;
+  width: 44em;
+  text-align: center;
+}
+
+#grid li {
+  width: 2em;
+  height: 2em;
+  background-color: #ddd;
+  margin: -0.1em 0;
+  border: 1px solid #ccc;
+}
+
+#grid .ui-selecting {
+  background: rgba(0, 255, 0, 0.2);
+}
+
+#grid .ui-selected {
+  background: rgba(255, 0, 0, 0.8);
+}
