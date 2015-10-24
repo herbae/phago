@@ -34,6 +34,12 @@ body {
   background: blue;
 }
 
+.selecionado {
+  opacity: 0.3;
+  color: black !important;
+  font-weight: bold;
+}
+
 #player2 {
   float: right;
 }

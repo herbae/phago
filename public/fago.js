@@ -1,22 +1,22 @@
 'use strict';
 
 (function () {
-  var player = 1;
+  var jogador = "j1";
+  var fagoSelecionado;
 
   $(window).load(() => {
     inicializarGrid();
     inicializarFagos();
 
-      console.log($("#player1 li").hasClass("p1"));
-
     $('#grid').selectable({
       delay: 150,
-      stop: aoSelecionar
+      stop: aoSelecionar,
+      disabled: true
     });
 
     $('.fagos').click((evento) => {
       var elemento = evento.toElement;
-      if($(elemento).hasClass("p" + player)) {
+      if($(elemento).hasClass(jogador)) {
         selecionarFago(elemento);
       };
       // $(evento.toElement).slideUp();
@@ -24,20 +24,27 @@
   });
 
   function selecionarFago(fago) {
-    $('.p' + player).css('background', 'blue');
-    $('.p' + player).css('color', 'white');
-    $(fago).css('background', 'rgba(0, 0, 255, 0.1)');
-    $(fago).css('color', 'rgba(0, 0, 0, 0.1)');
+    fagoSelecionado = fago;
+    $('.' + jogador).removeClass('selecionado');
+    $(fago).addClass('selecionado');
+    $('#grid').selectable('enable');
   }
 
   function aoSelecionar(event) {
-    if(player === 1) {
-      player = 2;
+    if(!fagoSelecionado) {
+      return;
+    }
+
+    if(jogador === 'j1') {
+      jogador = 'j2';
       $('#grid .ui-selected').css('background', 'rgba(0, 0, 255, 0.8)');
     } else {
-      player = 1;
+      jogador = 'j1';
       $('#grid .ui-selected').css('background', 'rgba(255, 0, 0, 0.8)');
     }
+    $(fagoSelecionado).slideUp();
+    fagoSelecionado = undefined;
+    $('#grid').selectable('disable');
   }
 
   function inicializarGrid() {
@@ -47,12 +54,12 @@
   }
 
   function inicializarFagos() {
-    $('#player1').append('<li class="p1 noselect">' + 12 + '</li>');
-    $('#player1').append('<li class="p1 noselect">' + 8 + '</li>');
-    $('#player1').append('<li class="p1 noselect">' + 6 + '</li>');
-    $('#player2').append('<li class="p2 noselect">' + 8 + '</li>');
-    $('#player2').append('<li class="p2 noselect">' + 6 + '</li>');
-    $('#player2').append('<li class="p2 noselect">' + 12 + '</li>');
+    $('#player1').append('<li class="j1 noselect">' + 12 + '</li>');
+    $('#player1').append('<li class="j1 noselect">' + 8 + '</li>');
+    $('#player1').append('<li class="j1 noselect">' + 6 + '</li>');
+    $('#player2').append('<li class="j2 noselect">' + 8 + '</li>');
+    $('#player2').append('<li class="j2 noselect">' + 6 + '</li>');
+    $('#player2').append('<li class="j2 noselect">' + 12 + '</li>');
   }
 
   function obterNumeroAleatorio(min, max) {
