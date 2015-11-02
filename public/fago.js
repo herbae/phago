@@ -29,7 +29,7 @@
   });
 
   function inicializarGrid() {
-    for (let i = 1; i <= (lado * lado); i++) {
+    for (var i = 1; i <= (lado * lado); i++) {
       $('#grid').append('<li class="noselect opcao-grid" id="q' + i + '"></li>');
     }
     $('#grid').css('width', (lado * 2 * 1.1) + 'em');
