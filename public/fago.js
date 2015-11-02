@@ -130,14 +130,19 @@
 
     $(fagoSelecionado).slideUp();
     criarFago(jogador);
-    $('#grid .ui-selected').addClass('ocupado');
-    $('#grid .ui-selected').addClass('ocupado' + jogador);
+
+    preencherQuadradosOcupados();
     if(jogador === 'j1') {
       jogador = 'j2';
     } else {
       jogador = 'j1';
     }
     selecionarProximoFago();
+  }
+
+  function preencherQuadradosOcupados() {
+    $('#grid .ui-selected').addClass('ocupado');
+    $('#grid .ui-selected').addClass('ocupado' + jogador);
   }
 
   function selecionarProximoFago() {
