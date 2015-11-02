@@ -33,6 +33,7 @@ body {
 
 #j1 li {
   background: blue;
+  display: none;
 }
 
 .selecionado {
@@ -47,6 +48,7 @@ body {
 
 #j2 li {
   background: red;
+  display: none;
 }
 
 .conteudo li {

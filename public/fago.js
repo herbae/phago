@@ -21,7 +21,7 @@
 
     $('.fagos').click((evento) => {
       var elemento = evento.toElement;
-      if($(elemento).hasClass(jogador)) {
+      if(elemento.parentNode.id === jogador) {
         selecionarFago(elemento);
       };
     });
@@ -48,10 +48,16 @@
 
     function preencherFagosIniciais(jogador) {
       for(var i = 0; i < 3; i++) {
-        var fago = fagos[obterNumeroAleatorio(0, fagos.length - 1)];
-        $('#' + jogador).append('<li noselect">' + fago + '</li>');
+        criarFago(jogador);
       }
     }
+  }
+
+  function criarFago(jogador) {
+    var fago = fagos[obterNumeroAleatorio(0, fagos.length - 1)];
+    var elemento = $('<li noselect">' + fago + '</li>');
+    $('#' + jogador).append(elemento);
+    elemento.slideDown();
   }
 
   function mostrarLados(evento) {
@@ -110,6 +116,9 @@
       $('#grid li').removeClass('ui-selected');
       return;
     };
+
+    $(fagoSelecionado).slideUp();
+    criarFago(jogador);
     if(jogador === 'j1') {
       jogador = 'j2';
       $('#grid .ui-selected').css('background', 'rgba(0, 0, 255, 0.8)');
@@ -117,7 +126,6 @@
       jogador = 'j1';
       $('#grid .ui-selected').css('background', 'rgba(255, 0, 0, 0.8)');
     }
-    $(fagoSelecionado).slideUp();
     fagoSelecionado = undefined;
     $('#grid').selectable('disable');
   }
