@@ -137,11 +137,12 @@
     } else {
       jogador = 'j1';
     }
-    limparSelecao();
+    selecionarProximoFago();
   }
 
-  function limparSelecao() {
+  function selecionarProximoFago() {
     fagoSelecionado = undefined;
+    $('#grid li').removeClass('ui-selected');
     $('#grid').selectable('disable');
   }
 
