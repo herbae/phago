@@ -51,6 +51,28 @@ body {
   display: none;
 }
 
+.placar {
+  width: 3em;
+  margin: 0;
+  margin-top: 7em;
+  font-size: 2em;
+  border: 1px solid;
+  line-height: 2em;
+  padding: 0;
+}
+
+#placar-j1 {
+  float: left;
+  clear: left;
+  color: blue;
+}
+
+#placar-j2 {
+  float: right;
+  clear: right;
+  color: red;
+}
+
 .conteudo li {
   display: inline-block;
   cursor: pointer;

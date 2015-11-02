@@ -136,12 +136,19 @@
     criarFago(jogador);
 
     preencherQuadradosOcupados(jogador);
+    atualizarPlacar(jogador, quadradosSelecionados.size());
     if(jogador === 'j1') {
       jogador = 'j2';
     } else {
       jogador = 'j1';
     }
     selecionarProximoFago();
+  }
+
+  function atualizarPlacar(jogador, quantidade) {
+    var placar = Number.parseInt($('#placar-' + jogador).text());
+    placar += quantidade;
+    $('#placar-' + jogador).text(placar);
   }
 
   function preencherQuadradosOcupados(jogador) {
@@ -161,7 +168,7 @@
     }
     console.log(grid);
 
-
+    //continuar
 
     function montaGridVazio() {
       var grid = [];
