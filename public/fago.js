@@ -5,6 +5,7 @@
   var fagoSelecionado;
   var numSelecionado = [];
   var lado = 20;
+  var fagoMaximo = 10;
   var fagos = [];
 
   $(window).load(() => {
@@ -33,7 +34,7 @@
     }
     $('#grid').css('width', (lado * 2 * 1.1) + 'em');
   }
-  
+
   function inicializarFagos() {
     for(var i = 2; i < 10; i++) {
       for(var j = 2; j < 10; j++) {
@@ -61,7 +62,7 @@
   }
 
   function criarFago(jogador) {
-    var fago = fagos[obterNumeroAleatorio(0, fagos.length - 1)];
+    var fago = fagos[obterNumeroAleatorio(0, fagoMaximo)];
     var elemento = $('<li noselect">' + fago + '</li>');
     $('#' + jogador).append(elemento);
     elemento.slideDown();
@@ -118,6 +119,7 @@
     }
 
     numSelecionado.length = 0;
+    $('#conta').text("");
     var quadradosSelecionados = $('.ui-selected');
     var produtoSelecionado = $(fagoSelecionado).text();
     if(!(produtoSelecionado == quadradosSelecionados.size())
@@ -128,6 +130,8 @@
 
     $(fagoSelecionado).slideUp();
     criarFago(jogador);
+    $('#grid .ui-selected').addClass('ocupado');
+    $('#grid .ui-selected').addClass('ocupado' + jogador);
     if(jogador === 'j1') {
       jogador = 'j2';
       $('#grid .ui-selected').css('background', 'rgba(0, 0, 255, 0.8)');
@@ -135,13 +139,11 @@
       jogador = 'j1';
       $('#grid .ui-selected').css('background', 'rgba(255, 0, 0, 0.8)');
     }
-    $('#grid .ui-selected').addClass('ocupado');
     limparSelecao();
   }
 
   function limparSelecao() {
     fagoSelecionado = undefined;
-    $('#conta').text("");
     $('#grid').selectable('disable');
   }
 
