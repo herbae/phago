@@ -27,6 +27,13 @@
     });
   });
 
+  function inicializarGrid() {
+    for (let i = 1; i <= (lado * lado); i++) {
+      $('#grid').append('<li class="noselect opcao-grid" id="q' + i + '"></li>');
+    }
+    $('#grid').css('width', (lado * 2 * 1.1) + 'em');
+  }
+  
   function inicializarFagos() {
     for(var i = 2; i < 10; i++) {
       for(var j = 2; j < 10; j++) {
@@ -110,7 +117,6 @@
       return;
     }
 
-    $('#conta').text("");
     numSelecionado.length = 0;
     var quadradosSelecionados = $('.ui-selected');
     var produtoSelecionado = $(fagoSelecionado).text();
@@ -130,15 +136,13 @@
       $('#grid .ui-selected').css('background', 'rgba(255, 0, 0, 0.8)');
     }
     $('#grid .ui-selected').addClass('ocupado');
-    fagoSelecionado = undefined;
-    $('#grid').selectable('disable');
+    limparSelecao();
   }
 
-  function inicializarGrid() {
-    for (let i = 1; i <= (lado * lado); i++) {
-      $('#grid').append('<li class="noselect opcao-grid" id="q' + i + '"></li>');
-    }
-    $('#grid').css('width', (lado * 2 * 1.1) + 'em');
+  function limparSelecao() {
+    fagoSelecionado = undefined;
+    $('#conta').text("");
+    $('#grid').selectable('disable');
   }
 
   function obterNumeroAleatorio(min, max) {
