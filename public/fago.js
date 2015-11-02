@@ -5,7 +5,7 @@
   var fagoSelecionado;
   var numSelecionado = [];
   var lado = 20;
-  var fagoMaximo = 10;
+  var fagoMaximo = 5;
   var fagos = [];
 
   $(window).load(() => {
@@ -85,17 +85,17 @@
   }
 
   function calculaConta() {
-    var menor = menor(numSelecionado);
-    var maior = maior(numSelecionado);
+    var menor = menor(numSelecionado) - 1;
+    var maior = maior(numSelecionado) - 1;
 
-    var x1 = menor % lado;
-    var x2 = maior % lado;
+    var x1 = (menor % lado) + 1;
+    var x2 = (maior % lado) + 1;
     var y1 = Math.floor(menor / lado) + 1;
     var y2 = Math.floor(maior / lado) + 1;
 
     var x = x2 - x1 + 1;
     var y = y2 - y1 + 1;
-    $('#conta').text(x + " x " + y);
+    $('#conta').text(x + " x " + y + " = " + x * y);
 
     function menor(conjunto) {
       return conjunto.reduce((acc, num) => {
@@ -150,10 +150,18 @@
     selecionados.addClass('ocupado');
     selecionados.addClass('ocupado' + jogador);
 
+    selecionados = $('#grid .ocupado');
+
     var grid = montaGridVazio();
     for (var i = 0; i < selecionados.length; i++) {
-      console.log(selecionados);
+      var posicao = extrairPosicao(selecionados[i]);
+      var x = posicao % lado;
+      var y = Math.floor(posicao / lado) + 1;
+      grid[y][x] = selecionados[i];
     }
+    console.log(grid);
+
+
 
     function montaGridVazio() {
       var grid = [];
