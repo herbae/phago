@@ -21,7 +21,7 @@
     });
 
     $('.fagos').click((evento) => {
-      var elemento = evento.toElement;
+      var elemento = evento.target;
       if(elemento.parentNode.id === jogador) {
         selecionarFago(elemento);
       };
