@@ -112,7 +112,10 @@
 
     $('#conta').text("");
     numSelecionado.length = 0;
-    if(!($(fagoSelecionado).text() == $('.ui-selected').size())) {
+    var quadradosSelecionados = $('.ui-selected');
+    var produtoSelecionado = $(fagoSelecionado).text();
+    if(!(produtoSelecionado == quadradosSelecionados.size())
+      || quadradosSelecionados.hasClass('ocupado')) {
       $('#grid li').removeClass('ui-selected');
       return;
     };
@@ -126,6 +129,7 @@
       jogador = 'j1';
       $('#grid .ui-selected').css('background', 'rgba(255, 0, 0, 0.8)');
     }
+    $('#grid .ui-selected').addClass('ocupado');
     fagoSelecionado = undefined;
     $('#grid').selectable('disable');
   }
