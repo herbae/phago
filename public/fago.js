@@ -63,7 +63,7 @@
 
   function criarFago(jogador) {
     var fago = fagos[obterNumeroAleatorio(0, fagoMaximo)];
-    var elemento = $('<li noselect">' + fago + '</li>');
+    var elemento = $('<li class="noselect">' + fago + '</li>');
     $('#' + jogador).append(elemento);
     elemento.slideDown();
   }
@@ -72,12 +72,16 @@
     var selecting = $('.ui-selecting');
     numSelecionado.length = 0;
     for(var i = 0; i < selecting.length; i++) {
-      numSelecionado.push(Number.parseInt(selecting[i].id.substring(1)));
+      numSelecionado.push(extrairPosicao(selecting[i]));
     }
 
     if(numSelecionado.length !== 0) {
       calculaConta();
     }
+  }
+
+  function extrairPosicao(quadrado) {
+    return Number.parseInt(quadrado.id.substring(1));
   }
 
   function calculaConta() {
@@ -108,7 +112,7 @@
 
   function selecionarFago(fago) {
     fagoSelecionado = fago;
-    $('.' + jogador).removeClass('selecionado');
+    $('.fagos li').removeClass('selecionado');
     $(fago).addClass('selecionado');
     $('#grid').selectable('enable');
   }
@@ -131,7 +135,7 @@
     $(fagoSelecionado).slideUp();
     criarFago(jogador);
 
-    preencherQuadradosOcupados();
+    preencherQuadradosOcupados(jogador);
     if(jogador === 'j1') {
       jogador = 'j2';
     } else {
@@ -140,9 +144,29 @@
     selecionarProximoFago();
   }
 
-  function preencherQuadradosOcupados() {
-    $('#grid .ui-selected').addClass('ocupado');
-    $('#grid .ui-selected').addClass('ocupado' + jogador);
+  function preencherQuadradosOcupados(jogador) {
+    var selecionados = $('#grid .ui-selected');
+
+    selecionados.addClass('ocupado');
+    selecionados.addClass('ocupado' + jogador);
+
+    var grid = montaGridVazio();
+    for (var i = 0; i < selecionados.length; i++) {
+      console.log(selecionados);
+    }
+
+    function montaGridVazio() {
+      var grid = [];
+
+      for (var y = 0; y < lado + 1; y++) {
+        grid.push([]);
+        for (var x = 0; x < lado + 1; x++) {
+          grid[y][x] = "";
+        }
+      }
+
+      return grid;
+    }
   }
 
   function selecionarProximoFago() {
