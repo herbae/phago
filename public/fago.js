@@ -134,10 +134,8 @@
     $('#grid .ui-selected').addClass('ocupado' + jogador);
     if(jogador === 'j1') {
       jogador = 'j2';
-      $('#grid .ui-selected').css('background', 'rgba(0, 0, 255, 0.8)');
     } else {
       jogador = 'j1';
-      $('#grid .ui-selected').css('background', 'rgba(255, 0, 0, 0.8)');
     }
     limparSelecao();
   }
