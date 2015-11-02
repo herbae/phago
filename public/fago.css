@@ -19,6 +19,7 @@ body {
   padding-top: 1em;
   text-align: center;
   overflow: hidden;
+  position: relative;
 }
 
 .conteudo ul {
@@ -26,11 +27,11 @@ body {
   width: 5em;
 }
 
-#player1 {
+#j1 {
   float: left;
 }
 
-#player1 li {
+#j1 li {
   background: blue;
 }
 
@@ -40,11 +41,11 @@ body {
   font-weight: bold;
 }
 
-#player2 {
+#j2 {
   float: right;
 }
 
-#player2 li {
+#j2 li {
   background: red;
 }
 
@@ -79,7 +80,6 @@ body {
   margin: 0 auto;
   padding: 0;
   height: auto;
-  width: 44em;
   text-align: center;
 }
 
@@ -95,6 +95,16 @@ body {
   background: rgba(0, 255, 0, 0.2);
 }
 
-#grid .ui-selected {
-  background: rgba(255, 0, 0, 0.8);
+#lados {
+  z-index: 1;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  -webkit-transform: translate(-50%,-50%);
+  font-size: 5em;
+}
+
+#conta {
+  opacity: 0.4;
 }
