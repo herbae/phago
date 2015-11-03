@@ -3,7 +3,7 @@
 (function () {
   var jogador = 'j1';
   var fagoSelecionado;
-  var numSelecionado = [];
+  var posSelecionadas = [];
   var lado = 20;
   var fagoMaximo = 5;
   var fagos = [];
@@ -70,12 +70,12 @@
 
   function mostrarLados(evento) {
     var selecting = $('.ui-selecting');
-    numSelecionado.length = 0;
+    posSelecionadas.length = 0;
     for(var i = 0; i < selecting.length; i++) {
-      numSelecionado.push(extrairPosicao(selecting[i]));
+      posSelecionadas.push(extrairPosicao(selecting[i]));
     }
 
-    if(numSelecionado.length !== 0) {
+    if(posSelecionadas.length !== 0) {
       calculaConta();
     }
   }
@@ -92,8 +92,8 @@
   }
 
   function calculaConta() {
-    var menor = menor(numSelecionado) - 1;
-    var maior = maior(numSelecionado) - 1;
+    var menor = menor(posSelecionadas) - 1;
+    var maior = maior(posSelecionadas) - 1;
 
     var x1 = (menor % lado) + 1;
     var x2 = (maior % lado) + 1;
@@ -129,7 +129,7 @@
       return;
     }
 
-    numSelecionado.length = 0;
+    posSelecionadas.length = 0;
     $('#conta').text("");
     var quadradosSelecionados = $('.ui-selected');
     var produtoSelecionado = $(fagoSelecionado).text();
