@@ -142,11 +142,7 @@
     criarFago(jogador);
 
     preencherQuadradosOcupados(jogador);
-    if(jogador === 'j1') {
-      jogador = 'j2';
-    } else {
-      jogador = 'j1';
-    }
+    jogador = jogador === 'j1' ? 'j2' : 'j1';
     selecionarProximoFago();
   }
 
