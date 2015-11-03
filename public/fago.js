@@ -3,7 +3,6 @@
 (function () {
   var jogador = 'j1';
   var fagoSelecionado;
-  var posSelecionadas = [];
   var lado = 20;
   var fagoMaximo = 5;
   var fagos = [];
@@ -15,8 +14,8 @@
     $('#grid').selectable({
       delay: 150,
       stop: aoSelecionar,
-      selecting: mostrarLados,
-      unselecting: mostrarLados,
+      selecting: calcularTamanhoRetangulo,
+      unselecting: calcularTamanhoRetangulo,
       disabled: true
     });
 
@@ -68,15 +67,15 @@
     elemento.slideDown();
   }
 
-  function mostrarLados(evento) {
+  function calcularTamanhoRetangulo(evento) {
     var selecting = $('.ui-selecting');
-    posSelecionadas.length = 0;
+    var pontosSelecionados = [];
     for(var i = 0; i < selecting.length; i++) {
-      posSelecionadas.push(extrairPosicao(selecting[i]));
+      pontosSelecionados.push(extrairPosicao(selecting[i]));
     }
 
-    if(posSelecionadas.length !== 0) {
-      calculaConta();
+    if(pontosSelecionados.length !== 0) {
+      calculaConta(pontosSelecionados);
     }
   }
 
@@ -91,9 +90,9 @@
     return {x: x, y: y};
   }
 
-  function calculaConta() {
-    var menor = menor(posSelecionadas) - 1;
-    var maior = maior(posSelecionadas) - 1;
+  function calculaConta(pontosSelecionados) {
+    var menor = menor(pontosSelecionados) - 1;
+    var maior = maior(pontosSelecionados) - 1;
 
     var x1 = (menor % lado) + 1;
     var x2 = (maior % lado) + 1;
@@ -129,7 +128,6 @@
       return;
     }
 
-    posSelecionadas.length = 0;
     $('#conta').text("");
     var quadradosSelecionados = $('.ui-selected');
     var produtoSelecionado = $(fagoSelecionado).text();
