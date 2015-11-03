@@ -84,6 +84,13 @@
     return Number.parseInt(quadrado.id.substring(1));
   }
 
+  function extrairPonto(quadrado) {
+    var posicao = extrairPosicao(quadrado) - 1;
+    var x = (posicao % lado) + 1;
+    var y = Math.floor(posicao / lado) + 1;
+    return {x: x, y: y};
+  }
+
   function calculaConta() {
     var menor = menor(numSelecionado) - 1;
     var maior = maior(numSelecionado) - 1;
@@ -157,20 +164,62 @@
     selecionados.addClass('ocupado');
     selecionados.addClass('ocupado' + jogador);
 
+    selecionados = $('#grid .ocupado' + jogador);
+
+    var pontos = [];
+    for (var i = 0; i < selecionados.length; i++) {
+      var elemento = $(selecionados[i]);
+      var ponto = extrairPonto(selecionados[i]);
+      pontos.push(ponto);
+    }
+
+    var menorPonto = pontos.reduce((menorPonto, ponto) => {
+      return {
+        x: menorPonto.x < ponto.x ? menorPonto.x : ponto.x,
+        y: menorPonto.y < ponto.y ? menorPonto.y : ponto.y
+      };
+    }, {x: Number.POSITIVE_INFINITY, y: Number.POSITIVE_INFINITY});
+
+    var maiorPonto = pontos.reduce((maiorPonto, ponto) => {
+      return {
+        x: maiorPonto.x > ponto.x ? maiorPonto.x : ponto.x,
+        y: maiorPonto.y > ponto.y ? maiorPonto.y : ponto.y
+      };
+    }, {x: 0, y: 0});
+
     selecionados = $('#grid .ocupado');
 
-    var grid = montaGridVazio();
+    var grid = montaGrid();
     for (var i = 0; i < selecionados.length; i++) {
       var posicao = extrairPosicao(selecionados[i]);
-      var x = posicao % lado;
-      var y = Math.floor(posicao / lado) + 1;
-      grid[y][x] = selecionados[i];
+      var ponto = extrairPonto(selecionados[i]);
+      grid[ponto.y][ponto.x] = {id: posicao};
     }
-    console.log(grid);
 
-    //continuar
+    var encontrouQuadradoCinza = false;
+    for (var y = menorPonto.y; y <= maiorPonto.y; y++) {
+      for (var x = menorPonto.x; x <= maiorPonto.x; x++) {
+        if(!grid[y][x]) {
+          encontrouQuadradoCinza = true;
+          break;
+        };
+      }
+      if(encontrouQuadradoCinza) {
+        break;
+      }
+    }
 
-    function montaGridVazio() {
+    if(!encontrouQuadradoCinza) {
+      for (var y = menorPonto.y; y <= maiorPonto.y; y++) {
+        for (var x = menorPonto.x; x <= maiorPonto.x; x++) {
+          $('#q' + grid[y][x].id).removeClass('ocupadoj1');
+          $('#q' + grid[y][x].id).removeClass('ocupadoj2');
+          $('#q' + grid[y][x].id).addClass('ocupado' + jogador);
+        }
+      }
+    }
+
+    function montaGrid() {
       var grid = [];
 
       for (var y = 0; y < lado + 1; y++) {
