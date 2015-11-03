@@ -71,11 +71,11 @@
     var selecting = $('.ui-selecting');
     var pontosSelecionados = [];
     for(var i = 0; i < selecting.length; i++) {
-      pontosSelecionados.push(extrairPosicao(selecting[i]));
+      pontosSelecionados.push(extrairPonto(selecting[i]));
     }
 
     if(pontosSelecionados.length !== 0) {
-      calculaConta(pontosSelecionados);
+      mostrarConta(pontosSelecionados);
     }
   }
 
@@ -90,30 +90,31 @@
     return {x: x, y: y};
   }
 
-  function calculaConta(pontosSelecionados) {
-    var menor = menor(pontosSelecionados) - 1;
-    var maior = maior(pontosSelecionados) - 1;
+  function maiorPonto(pontos) {
+    return pontos.reduce((maiorPonto, ponto) => {
+      return {
+        x: maiorPonto.x > ponto.x ? maiorPonto.x : ponto.x,
+        y: maiorPonto.y > ponto.y ? maiorPonto.y : ponto.y
+      };
+    }, {x: 0, y: 0});
+  }
 
-    var x1 = (menor % lado) + 1;
-    var x2 = (maior % lado) + 1;
-    var y1 = Math.floor(menor / lado) + 1;
-    var y2 = Math.floor(maior / lado) + 1;
+  function menorPonto(pontos) {
+    return pontos.reduce((menorPonto, ponto) => {
+      return {
+        x: menorPonto.x < ponto.x ? menorPonto.x : ponto.x,
+        y: menorPonto.y < ponto.y ? menorPonto.y : ponto.y
+      };
+    }, {x: Number.POSITIVE_INFINITY, y: Number.POSITIVE_INFINITY});
+  }
 
-    var x = x2 - x1 + 1;
-    var y = y2 - y1 + 1;
+  function mostrarConta(pontosSelecionados) {
+    var menor = menorPonto(pontosSelecionados);
+    var maior = maiorPonto(pontosSelecionados);
+
+    var x = maior.x - menor.x + 1;
+    var y = maior.y - menor.y + 1;
     $('#conta').text(x + " x " + y + " = " + x * y);
-
-    function menor(conjunto) {
-      return conjunto.reduce((acc, num) => {
-        return acc >= num ? num : acc;
-      });
-    }
-
-    function maior(conjunto) {
-      return conjunto.reduce((acc, num) => {
-        return acc <= num ? num : acc;
-      });
-    }
   }
 
   function selecionarFago(fago) {
