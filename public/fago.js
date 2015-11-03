@@ -143,7 +143,6 @@
     criarFago(jogador);
 
     preencherQuadradosOcupados(jogador);
-    atualizarPlacar(jogador, quadradosSelecionados.size());
     if(jogador === 'j1') {
       jogador = 'j2';
     } else {
@@ -152,10 +151,22 @@
     selecionarProximoFago();
   }
 
-  function atualizarPlacar(jogador, quantidade) {
-    var placar = Number.parseInt($('#placar-' + jogador).text());
-    placar += quantidade;
-    $('#placar-' + jogador).text(placar);
+  function contarPontos(grid) {
+    var placarJ1 = 0;
+    var placarJ2 = 0;
+
+    for (var y = 0; y < lado + 1; y++) {
+      for (var x = 0; x < lado + 1; x++) {
+        if(grid[y][x].jogador === "j1") {
+          placarJ1++;
+        } else if(grid[y][x].jogador === "j2") {
+          placarJ2++;
+        }
+      }
+    }
+
+    $('#placar-j1').text(placarJ1);
+    $('#placar-j2').text(placarJ2);
   }
 
   function preencherQuadradosOcupados(jogador) {
@@ -193,7 +204,8 @@
     for (var i = 0; i < selecionados.length; i++) {
       var posicao = extrairPosicao(selecionados[i]);
       var ponto = extrairPonto(selecionados[i]);
-      grid[ponto.y][ponto.x] = {id: posicao};
+      var jog = $(selecionados[i]).hasClass("ocupadoj1") ? "j1" : "j2";
+      grid[ponto.y][ponto.x] = {id: posicao, jogador: jog};
     }
 
     var encontrouQuadradoCinza = false;
@@ -212,12 +224,15 @@
     if(!encontrouQuadradoCinza) {
       for (var y = menorPonto.y; y <= maiorPonto.y; y++) {
         for (var x = menorPonto.x; x <= maiorPonto.x; x++) {
+          grid[y][x].jogador = jogador;
           $('#q' + grid[y][x].id).removeClass('ocupadoj1');
           $('#q' + grid[y][x].id).removeClass('ocupadoj2');
           $('#q' + grid[y][x].id).addClass('ocupado' + jogador);
         }
       }
     }
+
+    contarPontos(grid);
 
     function montaGrid() {
       var grid = [];
