@@ -4,8 +4,8 @@
   var jogadorAtivo = 'j1';
   var fagoSelecionado;
   var lado = 20;
-  var fagoMaximo = 5;
   var fabricaFagos = [];
+  var quantidadeFagos = 7;
 
   $(window).load(() => {
     inicializarGrid();
@@ -54,14 +54,14 @@
     preencherFagosIniciais('j2');
 
     function preencherFagosIniciais(jogador) {
-      for(var i = 0; i < 3; i++) {
+      for(var i = 0; i < quantidadeFagos; i++) {
         criarFago(jogador);
       }
     }
   }
 
   function criarFago(jogador) {
-    var fago = fabricaFagos[obterNumeroAleatorio(0, fagoMaximo)];
+    var fago = fabricaFagos[obterNumeroAleatorio(0, fabricaFagos.length - 1)];
     var elemento = $('<li class="noselect">' + fago + '</li>');
     $('#' + jogador).append(elemento);
     elemento.slideDown();
@@ -239,7 +239,7 @@
     if(!encontrouQuadradoCinza) {
       for (var y = esquerdoAcima.y; y <= direitoAbaixo.y; y++) {
         for (var x = esquerdoAcima.x; x <= direitoAbaixo.x; x++) {
-          grid[y][x].jogador = jogador;
+          grid[y][x].jogador = jogador; //inócuo
           $('#q' + grid[y][x].id).removeClass('ocupadoj1');
           $('#q' + grid[y][x].id).removeClass('ocupadoj2');
           $('#q' + grid[y][x].id).addClass('ocupado' + jogador);
