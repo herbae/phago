@@ -13,7 +13,7 @@
 
     $('#grid').selectable({
       delay: 150,
-      stop: aoSelecionar,
+      stop: realizarJogada,
       selecting: calcularTamanhoRetangulo,
       unselecting: calcularTamanhoRetangulo,
       disabled: true
@@ -124,7 +124,7 @@
     $('#grid').selectable('enable');
   }
 
-  function aoSelecionar(event) {
+  function realizarJogada(event) {
     if(!fagoSelecionado) {
       return;
     }
@@ -143,7 +143,7 @@
 
     preencherQuadradosOcupados(jogadorAtivo);
 
-    var grid = montaGrid();
+    var grid = montarGrid();
     fagocitar(jogadorAtivo, grid);
     contarPontos(grid);
 
@@ -214,7 +214,7 @@
     }
   }
 
-  function montaGrid() {
+  function montarGrid() {
     var grid = [];
 
     for (var y = 0; y < lado + 1; y++) {
@@ -229,8 +229,8 @@
     for (var i = 0; i < selecionados.length; i++) {
       var posicao = extrairPosicao(selecionados[i]);
       var ponto = extrairPonto(selecionados[i]);
-      var jog = $(selecionados[i]).hasClass("ocupadoj1") ? "j1" : "j2";
-      grid[ponto.y][ponto.x] = {id: posicao, jogador: jog};
+      var jogador = $(selecionados[i]).hasClass("ocupadoj1") ? "j1" : "j2";
+      grid[ponto.y][ponto.x] = {id: posicao, jogador: jogador};
     }
 
     return grid;
