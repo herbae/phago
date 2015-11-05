@@ -90,27 +90,27 @@
     return {x: x, y: y};
   }
 
-  function maiorPonto(pontos) {
-    return pontos.reduce((maiorPonto, ponto) => {
+  function cantoDireitoAbaixo(figura) {
+    return figura.reduce((canto, ponto) => {
       return {
-        x: maiorPonto.x > ponto.x ? maiorPonto.x : ponto.x,
-        y: maiorPonto.y > ponto.y ? maiorPonto.y : ponto.y
+        x: canto.x > ponto.x ? canto.x : ponto.x,
+        y: canto.y > ponto.y ? canto.y : ponto.y
       };
     }, {x: 0, y: 0});
   }
 
-  function menorPonto(pontos) {
-    return pontos.reduce((menorPonto, ponto) => {
+  function cantoEsquerdoAcima(figura) {
+    return figura.reduce((canto, ponto) => {
       return {
-        x: menorPonto.x < ponto.x ? menorPonto.x : ponto.x,
-        y: menorPonto.y < ponto.y ? menorPonto.y : ponto.y
+        x: canto.x < ponto.x ? canto.x : ponto.x,
+        y: canto.y < ponto.y ? canto.y : ponto.y
       };
     }, {x: Number.POSITIVE_INFINITY, y: Number.POSITIVE_INFINITY});
   }
 
   function mostrarConta(pontosSelecionados) {
-    var menor = menorPonto(pontosSelecionados);
-    var maior = maiorPonto(pontosSelecionados);
+    var menor = cantoEsquerdoAcima(pontosSelecionados);
+    var maior = cantoDireitoAbaixo(pontosSelecionados);
 
     var x = maior.x - menor.x + 1;
     var y = maior.y - menor.y + 1;
@@ -143,7 +143,7 @@
 
     preencherQuadradosOcupados(jogador);
     jogador = jogador === 'j1' ? 'j2' : 'j1';
-    selecionarProximoFago();
+    limparJogada();
   }
 
   function contarPontos(grid) {
@@ -172,26 +172,16 @@
 
     selecionados = $('#grid .ocupado' + jogador);
 
-    var pontos = [];
+    var figura = [];
     for (var i = 0; i < selecionados.length; i++) {
       var elemento = $(selecionados[i]);
       var ponto = extrairPonto(selecionados[i]);
-      pontos.push(ponto);
+      figura.push(ponto);
     }
 
-    var menorPonto = pontos.reduce((menorPonto, ponto) => {
-      return {
-        x: menorPonto.x < ponto.x ? menorPonto.x : ponto.x,
-        y: menorPonto.y < ponto.y ? menorPonto.y : ponto.y
-      };
-    }, {x: Number.POSITIVE_INFINITY, y: Number.POSITIVE_INFINITY});
+    var esquerdoAcima = cantoEsquerdoAcima(figura);
 
-    var maiorPonto = pontos.reduce((maiorPonto, ponto) => {
-      return {
-        x: maiorPonto.x > ponto.x ? maiorPonto.x : ponto.x,
-        y: maiorPonto.y > ponto.y ? maiorPonto.y : ponto.y
-      };
-    }, {x: 0, y: 0});
+    var direitoAbaixo = cantoDireitoAbaixo(figura);
 
     selecionados = $('#grid .ocupado');
 
@@ -204,8 +194,8 @@
     }
 
     var encontrouQuadradoCinza = false;
-    for (var y = menorPonto.y; y <= maiorPonto.y; y++) {
-      for (var x = menorPonto.x; x <= maiorPonto.x; x++) {
+    for (var y = esquerdoAcima.y; y <= direitoAbaixo.y; y++) {
+      for (var x = esquerdoAcima.x; x <= direitoAbaixo.x; x++) {
         if(!grid[y][x]) {
           encontrouQuadradoCinza = true;
           break;
@@ -217,8 +207,8 @@
     }
 
     if(!encontrouQuadradoCinza) {
-      for (var y = menorPonto.y; y <= maiorPonto.y; y++) {
-        for (var x = menorPonto.x; x <= maiorPonto.x; x++) {
+      for (var y = esquerdoAcima.y; y <= direitoAbaixo.y; y++) {
+        for (var x = esquerdoAcima.x; x <= direitoAbaixo.x; x++) {
           grid[y][x].jogador = jogador;
           $('#q' + grid[y][x].id).removeClass('ocupadoj1');
           $('#q' + grid[y][x].id).removeClass('ocupadoj2');
@@ -243,7 +233,7 @@
     }
   }
 
-  function selecionarProximoFago() {
+  function limparJogada() {
     fagoSelecionado = undefined;
     $('#grid li').removeClass('ui-selected');
     $('#grid').selectable('disable');
