@@ -35,19 +35,22 @@
   }
 
   function inicializarFabricaFagos() {
+    var fagos = [];
     for(var i = 2; i < 10; i++) {
       for(var j = 2; j < 10; j++) {
         var produto = i * j;
-        if(fabricaFagos.indexOf(produto) === -1) {
-          fabricaFagos.push(produto);
+        if(fagos.indexOf(produto) === -1) {
+          fagos.push(produto);
         }
       }
     }
 
-    fabricaFagos = fabricaFagos.sort((a, b) => {
+    fabricaFagos = fagos.sort((a, b) => {
       if(a === b) { return 0; }
 
       return a < b ? -1 : 1;
+    }).map((fago) => {
+      return {fago: fago, peso: 81 - fago};
     });
 
     preencherFagosIniciais('j1');
@@ -277,7 +280,7 @@
   }
 
   function obterFagoAleatorio() {
-    return fabricaFagos[obterNumeroAleatorio(0, fabricaFagos.length - 1)];
+    return fabricaFagos[obterNumeroAleatorio(0, fabricaFagos.length - 1)].fago;
   }
 
   function obterNumeroAleatorio(min, max) {
