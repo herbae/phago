@@ -61,7 +61,7 @@
   }
 
   function criarFago(jogador) {
-    var fago = fabricaFagos[obterNumeroAleatorio(0, fabricaFagos.length - 1)];
+    var fago = obterFagoAleatorio();
     var elemento = $('<li class="noselect">' + fago + '</li>');
     $('#' + jogador).append(elemento);
     elemento.slideDown();
@@ -274,6 +274,10 @@
     fagoSelecionado = undefined;
     $('#grid li').removeClass('ui-selected');
     $('#grid').selectable('disable');
+  }
+
+  function obterFagoAleatorio() {
+    return fabricaFagos[obterNumeroAleatorio(0, fabricaFagos.length - 1)];
   }
 
   function obterNumeroAleatorio(min, max) {
