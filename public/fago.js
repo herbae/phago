@@ -142,6 +142,8 @@
     criarFago(jogadorAtivo);
 
     preencherQuadradosOcupados(jogadorAtivo);
+    fagocitar(jogadorAtivo);
+    
     jogadorAtivo = jogadorAtivo === 'j1' ? 'j2' : 'j1';
     limparJogada();
   }
@@ -169,8 +171,10 @@
 
     selecionados.addClass('ocupado');
     selecionados.addClass('ocupado' + jogador);
+  }
 
-    selecionados = $('#grid .ocupado' + jogador);
+  function fagocitar(jogador) {
+    var selecionados = $('#grid .ocupado' + jogador);
 
     var figura = [];
     for (var i = 0; i < selecionados.length; i++) {
@@ -180,7 +184,6 @@
     }
 
     var esquerdoAcima = cantoEsquerdoAcima(figura);
-
     var direitoAbaixo = cantoDireitoAbaixo(figura);
 
     selecionados = $('#grid .ocupado');
