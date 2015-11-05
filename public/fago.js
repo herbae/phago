@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  var jogador = 'j1';
+  var jogadorAtivo = 'j1';
   var fagoSelecionado;
   var lado = 20;
   var fagoMaximo = 5;
@@ -21,7 +21,7 @@
 
     $('.fagos').click((evento) => {
       var elemento = evento.target;
-      if(elemento.parentNode.id === jogador) {
+      if(elemento.parentNode.id === jogadorAtivo) {
         selecionarFago(elemento);
       };
     });
@@ -139,10 +139,10 @@
     };
 
     $(fagoSelecionado).slideUp();
-    criarFago(jogador);
+    criarFago(jogadorAtivo);
 
-    preencherQuadradosOcupados(jogador);
-    jogador = jogador === 'j1' ? 'j2' : 'j1';
+    preencherQuadradosOcupados(jogadorAtivo);
+    jogadorAtivo = jogadorAtivo === 'j1' ? 'j2' : 'j1';
     limparJogada();
   }
 
