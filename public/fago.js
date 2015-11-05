@@ -6,6 +6,7 @@
   var lado = 20;
   var fabricaFagos = [];
   var quantidadeFagos = 7;
+  var pesoTotal = 0;
 
   $(window).load(() => {
     inicializarGrid();
@@ -50,8 +51,12 @@
 
       return a < b ? -1 : 1;
     }).map((fago) => {
-      return {fago: fago, peso: 81 - fago};
+      return {fago: fago, peso: 90 - fago};
     });
+
+    pesoTotal = fabricaFagos.reduce((acc, fago) => {
+      return acc += fago.peso;
+    }, 0);
 
     preencherFagosIniciais('j1');
     preencherFagosIniciais('j2');
@@ -64,7 +69,7 @@
   }
 
   function criarFago(jogador) {
-    var fago = obterFagoAleatorio();
+    var fago = obterFagoAleatorio(pesoTotal);
     var elemento = $('<li class="noselect">' + fago + '</li>');
     $('#' + jogador).append(elemento);
     elemento.slideDown();
@@ -279,8 +284,17 @@
     $('#grid').selectable('disable');
   }
 
-  function obterFagoAleatorio() {
-    return fabricaFagos[obterNumeroAleatorio(0, fabricaFagos.length - 1)].fago;
+  function obterFagoAleatorio(pesoTotal) {
+    var pesoEscolhido = obterNumeroAleatorio(0, pesoTotal - 1);
+    var fagoEscolhido = 0;
+    for (var i = 0; i < fabricaFagos.length; i++) {
+      pesoEscolhido -= fabricaFagos[i].peso;
+      if(pesoEscolhido < 0) {
+        fagoEscolhido = fabricaFagos[i].fago;
+        break;
+      }
+    }
+    return fagoEscolhido;
   }
 
   function obterNumeroAleatorio(min, max) {
