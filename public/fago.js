@@ -5,11 +5,11 @@
   var fagoSelecionado;
   var lado = 20;
   var fagoMaximo = 5;
-  var fagos = [];
+  var fabricaFagos = [];
 
   $(window).load(() => {
     inicializarGrid();
-    inicializarFagos();
+    inicializarFabricaFagos();
 
     $('#grid').selectable({
       delay: 150,
@@ -34,17 +34,17 @@
     $('#grid').css('width', (lado * 2 * 1.1) + 'em');
   }
 
-  function inicializarFagos() {
+  function inicializarFabricaFagos() {
     for(var i = 2; i < 10; i++) {
       for(var j = 2; j < 10; j++) {
         var produto = i * j;
-        if(fagos.indexOf(produto) === -1) {
-          fagos.push(produto);
+        if(fabricaFagos.indexOf(produto) === -1) {
+          fabricaFagos.push(produto);
         }
       }
     }
 
-    fagos = fagos.sort((a, b) => {
+    fabricaFagos = fabricaFagos.sort((a, b) => {
       if(a === b) { return 0; }
 
       return a < b ? -1 : 1;
@@ -61,7 +61,7 @@
   }
 
   function criarFago(jogador) {
-    var fago = fagos[obterNumeroAleatorio(0, fagoMaximo)];
+    var fago = fabricaFagos[obterNumeroAleatorio(0, fagoMaximo)];
     var elemento = $('<li class="noselect">' + fago + '</li>');
     $('#' + jogador).append(elemento);
     elemento.slideDown();
