@@ -4,9 +4,10 @@
   var jogadorAtivo = 'j1';
   var fagoSelecionado;
   var lado = 20;
-  var fabricaFagos = [];
   var quantidadeFagos = 7;
-  var pesoTotal = 0;
+
+  //funcoes IIFE
+  var obterFagoAleatorio;
 
   $(window).load(() => {
     inicializarGrid();
@@ -46,6 +47,7 @@
       }
     }
 
+    var fabricaFagos = [];
     fabricaFagos = fagos.sort((a, b) => {
       if(a === b) { return 0; }
 
@@ -54,9 +56,24 @@
       return {fago: fago, peso: 90 - fago};
     });
 
-    pesoTotal = fabricaFagos.reduce((acc, fago) => {
-      return acc += fago.peso;
-    }, 0);
+    obterFagoAleatorio = (function () {
+      var pesoTotal = fabricaFagos.reduce((acc, fago) => {
+            return acc += fago.peso;
+          }, 0);
+
+      return function() {
+        var pesoEscolhido = obterNumeroAleatorio(0, pesoTotal - 1);
+        var fagoEscolhido = 0;
+        for (var i = 0; i < fabricaFagos.length; i++) {
+          pesoEscolhido -= fabricaFagos[i].peso;
+          if(pesoEscolhido < 0) {
+            fagoEscolhido = fabricaFagos[i].fago;
+            break;
+          }
+        }
+        return fagoEscolhido;
+      }
+    })();
 
     preencherFagosIniciais('j1');
     preencherFagosIniciais('j2');
@@ -69,7 +86,7 @@
   }
 
   function criarFago(jogador) {
-    var fago = obterFagoAleatorio(pesoTotal);
+    var fago = obterFagoAleatorio();
     var elemento = $('<li class="noselect">' + fago + '</li>');
     $('#' + jogador).append(elemento);
     elemento.slideDown();
@@ -282,19 +299,6 @@
     fagoSelecionado = undefined;
     $('#grid li').removeClass('ui-selected');
     $('#grid').selectable('disable');
-  }
-
-  function obterFagoAleatorio(pesoTotal) {
-    var pesoEscolhido = obterNumeroAleatorio(0, pesoTotal - 1);
-    var fagoEscolhido = 0;
-    for (var i = 0; i < fabricaFagos.length; i++) {
-      pesoEscolhido -= fabricaFagos[i].peso;
-      if(pesoEscolhido < 0) {
-        fagoEscolhido = fabricaFagos[i].fago;
-        break;
-      }
-    }
-    return fagoEscolhido;
   }
 
   function obterNumeroAleatorio(min, max) {
