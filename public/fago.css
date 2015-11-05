@@ -102,14 +102,14 @@ body {
   user-select: none;
 }
 
-#grid {
+#painel {
   margin: 0 auto;
   padding: 0;
   height: auto;
   text-align: center;
 }
 
-#grid li {
+#painel li {
   width: 2em;
   height: 2em;
   background-color: #ddd;
@@ -117,15 +117,15 @@ body {
   border: 1px solid #ccc;
 }
 
-#grid .ui-selecting {
+#painel .ui-selecting {
   background: rgba(0, 255, 0, 0.2);
 }
 
-#grid .ocupadoj1 {
+#painel .ocupadoj1 {
   background: rgba(0, 0, 255, 0.8);
 }
 
-#grid .ocupadoj2 {
+#painel .ocupadoj2 {
   background: rgba(255, 0, 0, 0.8);
 }
 

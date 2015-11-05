@@ -10,10 +10,10 @@
   var obterFagoAleatorio;
 
   $(window).load(() => {
-    inicializarGrid();
+    inicializarPainel();
     inicializarFabricaFagos();
 
-    $('#grid').selectable({
+    $('#painel').selectable({
       delay: 150,
       stop: realizarJogada,
       selecting: calcularTamanhoRetangulo,
@@ -29,11 +29,11 @@
     });
   });
 
-  function inicializarGrid() {
+  function inicializarPainel() {
     for (var i = 1; i <= (lado * lado); i++) {
-      $('#grid').append('<li class="noselect opcao-grid" id="q' + i + '"></li>');
+      $('#painel').append('<li class="noselect" id="q' + i + '"></li>');
     }
-    $('#grid').css('width', (lado * 2 * 1.1) + 'em');
+    $('#painel').css('width', (lado * 2 * 1.1) + 'em');
   }
 
   function inicializarFabricaFagos() {
@@ -146,7 +146,7 @@
     fagoSelecionado = fago;
     $('.fagos li').removeClass('selecionado');
     $(fago).addClass('selecionado');
-    $('#grid').selectable('enable');
+    $('#painel').selectable('enable');
   }
 
   function realizarJogada(event) {
@@ -159,7 +159,7 @@
     var produtoSelecionado = $(fagoSelecionado).text();
     if(!(produtoSelecionado == quadradosSelecionados.size())
       || quadradosSelecionados.hasClass('ocupado')) {
-      $('#grid li').removeClass('ui-selected');
+      $('#painel li').removeClass('ui-selected');
       return;
     };
 
@@ -194,7 +194,7 @@
   }
 
   function preencherQuadradosOcupados(jogador) {
-    var selecionados = $('#grid .ui-selected');
+    var selecionados = $('#painel .ui-selected');
 
     selecionados.addClass('ocupado');
     selecionados.addClass('ocupado' + jogador);
@@ -283,7 +283,7 @@
       }
     }
 
-    var selecionados = $('#grid .ocupado');
+    var selecionados = $('#painel .ocupado');
 
     for (var i = 0; i < selecionados.length; i++) {
       var posicao = extrairPosicao(selecionados[i]);
@@ -297,8 +297,8 @@
 
   function limparJogada() {
     fagoSelecionado = undefined;
-    $('#grid li').removeClass('ui-selected');
-    $('#grid').selectable('disable');
+    $('#painel li').removeClass('ui-selected');
+    $('#painel').selectable('disable');
   }
 
   function obterNumeroAleatorio(min, max) {
