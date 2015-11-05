@@ -141,10 +141,9 @@
     $(fagoSelecionado).slideUp();
     criarFago(jogadorAtivo);
 
-    preencherQuadradosOcupados(jogadorAtivo);
-
+    var pontoInicial = preencherQuadradosOcupados(jogadorAtivo);
     var grid = montarGrid();
-    fagocitar(jogadorAtivo, grid);
+    fagocitar(jogadorAtivo, grid, pontoInicial);
     contarPontos(grid);
 
     jogadorAtivo = jogadorAtivo === 'j1' ? 'j2' : 'j1';
@@ -174,16 +173,51 @@
 
     selecionados.addClass('ocupado');
     selecionados.addClass('ocupado' + jogador);
+
+    var pontoInicial = extrairPonto(selecionados[0]);
+
+    return pontoInicial;
   }
 
-  function fagocitar(jogador, grid) {
-    var selecionados = $('#grid .ocupado' + jogador);
+  function fagocitar(jogador, grid, pontoInicial) {
+    function pontosAoRedor(ponto) {
+      var pontos = [];
 
-    var figura = [];
-    for (var i = 0; i < selecionados.length; i++) {
-      var elemento = $(selecionados[i]);
-      var ponto = extrairPonto(selecionados[i]);
-      figura.push(ponto);
+      if(ponto.x > 1) {
+        pontos.push({x: ponto.x - 1, y: ponto.y});
+      }
+      if(ponto.x < lado) {
+        pontos.push({x: ponto.x + 1, y: ponto.y});
+      }
+      if(ponto.y > 1) {
+        pontos.push({x: ponto.x, y: ponto.y - 1});
+      }
+      if(ponto.y < lado) {
+        pontos.push({x: ponto.x, y: ponto.y + 1});
+      }
+      return pontos;
+    }
+
+    Array.prototype.pIndexOf = function(p) {
+      for (var i = 0; i < this.length; i++) {
+        if (this[i].x == p.x && this[i].y == p.y) {
+          return i;
+        }
+      }
+      return -1;
+    }
+
+    var figura = [pontoInicial];
+
+    for (var i = 0; i < figura.length; i++) {
+      var ponto = figura[i];
+      var proximosPontos = pontosAoRedor(ponto);
+
+      proximosPontos.forEach((ponto) => {
+        if(figura.pIndexOf(ponto) === -1 && grid[ponto.y][ponto.x].jogador === jogador) {
+          figura.push(ponto);
+        }
+      });
     }
 
     var esquerdoAcima = cantoEsquerdoAcima(figura);
