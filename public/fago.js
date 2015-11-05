@@ -142,8 +142,11 @@
     criarFago(jogadorAtivo);
 
     preencherQuadradosOcupados(jogadorAtivo);
-    fagocitar(jogadorAtivo);
-    
+
+    var grid = montaGrid();
+    fagocitar(jogadorAtivo, grid);
+    contarPontos(grid);
+
     jogadorAtivo = jogadorAtivo === 'j1' ? 'j2' : 'j1';
     limparJogada();
   }
@@ -173,7 +176,7 @@
     selecionados.addClass('ocupado' + jogador);
   }
 
-  function fagocitar(jogador) {
+  function fagocitar(jogador, grid) {
     var selecionados = $('#grid .ocupado' + jogador);
 
     var figura = [];
@@ -185,16 +188,6 @@
 
     var esquerdoAcima = cantoEsquerdoAcima(figura);
     var direitoAbaixo = cantoDireitoAbaixo(figura);
-
-    selecionados = $('#grid .ocupado');
-
-    var grid = montaGrid();
-    for (var i = 0; i < selecionados.length; i++) {
-      var posicao = extrairPosicao(selecionados[i]);
-      var ponto = extrairPonto(selecionados[i]);
-      var jog = $(selecionados[i]).hasClass("ocupadoj1") ? "j1" : "j2";
-      grid[ponto.y][ponto.x] = {id: posicao, jogador: jog};
-    }
 
     var encontrouQuadradoCinza = false;
     for (var y = esquerdoAcima.y; y <= direitoAbaixo.y; y++) {
@@ -219,21 +212,28 @@
         }
       }
     }
+  }
 
-    contarPontos(grid);
+  function montaGrid() {
+    var grid = [];
 
-    function montaGrid() {
-      var grid = [];
-
-      for (var y = 0; y < lado + 1; y++) {
-        grid.push([]);
-        for (var x = 0; x < lado + 1; x++) {
-          grid[y][x] = "";
-        }
+    for (var y = 0; y < lado + 1; y++) {
+      grid.push([]);
+      for (var x = 0; x < lado + 1; x++) {
+        grid[y][x] = "";
       }
-
-      return grid;
     }
+
+    var selecionados = $('#grid .ocupado');
+
+    for (var i = 0; i < selecionados.length; i++) {
+      var posicao = extrairPosicao(selecionados[i]);
+      var ponto = extrairPonto(selecionados[i]);
+      var jog = $(selecionados[i]).hasClass("ocupadoj1") ? "j1" : "j2";
+      grid[ponto.y][ponto.x] = {id: posicao, jogador: jog};
+    }
+
+    return grid;
   }
 
   function limparJogada() {
