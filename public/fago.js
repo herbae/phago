@@ -140,6 +140,7 @@
     var x = maior.x - menor.x + 1;
     var y = maior.y - menor.y + 1;
     $('#conta').text(x + " x " + y + " = " + x * y);
+    $('#conta').show();
   }
 
   function selecionarFago(fago) {
@@ -154,7 +155,7 @@
       return;
     }
 
-    $('#conta').text("");
+    $('#conta').fadeOut(2000);
     var quadradosSelecionados = $('.ui-selected');
     var produtoSelecionado = $(fagoSelecionado).text();
     if(!(produtoSelecionado == quadradosSelecionados.size())
