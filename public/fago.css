@@ -121,6 +121,12 @@ body {
   -webkit-border-radius: 8px;
 }
 
+.color-transition {
+  -webkit-transition: background-color 500ms linear;
+  -moz-transition: background-color 500ms linear;
+  transition: background-color 500ms linear;
+}
+
 #painel .ui-selecting {
   background: rgba(0, 255, 0, 0.2);
 }

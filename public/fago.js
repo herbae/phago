@@ -168,6 +168,7 @@
     $(fagoSelecionado).slideUp();
     criarFago(jogadorAtivo);
 
+    $('#painel li').addClass('color-transition');
     var pontoInicial = preencherQuadradosOcupados(jogadorAtivo);
     var grid = montarGrid();
     fagocitar(jogadorAtivo, grid, pontoInicial);
@@ -301,6 +302,7 @@
     fagoSelecionado = undefined;
     $('#painel li').removeClass('ui-selected');
     $('#painel').selectable('disable');
+    $('painel li').removeClass('color-transition');
   }
 
   function obterNumeroAleatorio(min, max) {
