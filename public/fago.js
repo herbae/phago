@@ -34,7 +34,7 @@
     for (var i = 1; i <= (lado * lado); i++) {
       $('#painel').append('<li class="noselect" id="q' + i + '"></li>');
     }
-    $('#painel').css('width', (lado * 2 * 1.1) + 'em');
+    $('#painel').css('width', (lado * 2) + 'em');
   }
 
   function inicializarFabricaFagos() {
