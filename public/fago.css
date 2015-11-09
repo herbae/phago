@@ -114,7 +114,10 @@ body {
   height: 2em;
   background-color: #ddd;
   margin: -0.1em 0;
-  border: 1px solid #ccc;
+  border: 1px solid #fff;
+  border-radius: 8px;
+  -moz-border-radius: 8px;
+  -webkit-border-radius: 8px;
 }
 
 #painel .ui-selecting {
