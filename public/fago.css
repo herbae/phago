@@ -58,9 +58,12 @@ body {
   margin: 0;
   margin-bottom: 1em;
   font-size: 2em;
-  border: 1px solid;
   line-height: 2em;
   padding: 0;
+  border-radius: 10px;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  background-color: #ddd;
 }
 
 #placar-j1 {
