@@ -38,7 +38,7 @@ body {
 }
 
 .selecionado {
-  opacity: 0.3;
+  opacity: 0.8;
   color: black !important;
   font-weight: bold;
 }
