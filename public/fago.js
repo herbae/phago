@@ -5,6 +5,7 @@
   var fagoSelecionado;
   var lado = 20;
   var quantidadeFagos = 7;
+  var dificuldade = 10;
 
   //funcoes IIFE
   var obterFagoAleatorio;
@@ -57,7 +58,7 @@
     });
 
     obterFagoAleatorio = (function () {
-      var pesoTotal = fabricaFagos.reduce((acc, fago) => {
+      var pesoTotal = fabricaFagos.slice(0, dificuldade).reduce((acc, fago) => {
             return acc += fago.peso;
           }, 0);
 
