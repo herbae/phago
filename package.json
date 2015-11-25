@@ -4,7 +4,7 @@
   "description": "Virus bacteriófago",
   "main": "index.js",
   "scripts": {
-    "prestart": "bower install",
+    "postinstall": "bower install",
     "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
