@@ -13,6 +13,8 @@ app.get('/', (req, res) => {
   res.sendFile('index.html', { root: '.'});
 });
 
-app.listen(process.env.PORT || 5000, () => {
-  console.log('Fago está rodando na porta 5000.');
+var port = process.env.PORT || 5000;
+
+app.listen(port, () => {
+  console.log('Phago is running on port', port);
 });
