@@ -6,11 +6,13 @@
   var lado = 20;
   var quantidadeFagos = 7;
   var dificuldade = 10;
+  var connection;
 
   //funcoes IIFE
   var obterFagoAleatorio;
 
   $(window).load(() => {
+    inicializarWS();
     inicializarPainel();
     inicializarFabricaFagos();
 
@@ -29,6 +31,25 @@
       };
     });
   });
+
+  function inicializarWS() {
+    connection = new WebSocket(websocketHost())
+    connection.onopen = function () {
+      console.log('Websocket connected');
+    }
+    connection.onmessage = function (e) {
+      var payload = JSON.parse(e.data);
+      console.log('Received payload', payload);
+    }
+
+    function websocketHost() {
+      if(window.location.protocol === 'https:') {
+        return 'wss://' + window.location.host;
+      } else {
+        return 'ws://' + window.location.host;
+      }
+    }
+  }
 
   function inicializarPainel() {
     for (var i = 1; i <= (lado * lado); i++) {
