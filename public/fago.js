@@ -15,6 +15,7 @@
     inicializarWS();
     inicializarPainel();
     inicializarFabricaFagos();
+    getGame();
 
     $('#painel').selectable({
       delay: 150,
@@ -31,6 +32,12 @@
       };
     });
   });
+
+  function getGame() {
+    $.get('/api/game', {}, (data) => {
+      console.log('data received', data);
+    });
+  }
 
   function inicializarWS() {
     connection = new WebSocket(websocketHost())
