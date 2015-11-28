@@ -8,14 +8,10 @@
   var dificuldade = 10;
   var connection;
 
-  //funcoes IIFE
-  var obterFagoAleatorio;
-
   $(window).load(() => {
     inicializarWS();
     inicializarPainel();
     inicializarFabricaFagos();
-    getGame();
 
     $('#painel').selectable({
       delay: 150,
@@ -32,12 +28,6 @@
       };
     });
   });
-
-  function getGame() {
-    $.get('/api/game', {}, (data) => {
-      console.log('data received', data);
-    });
-  }
 
   function inicializarWS() {
     connection = new WebSocket(websocketHost())
@@ -66,44 +56,6 @@
   }
 
   function inicializarFabricaFagos() {
-    var fagos = [];
-    for(var i = 2; i < 10; i++) {
-      for(var j = 2; j < 10; j++) {
-        var produto = i * j;
-        if(fagos.indexOf(produto) === -1) {
-          fagos.push(produto);
-        }
-      }
-    }
-
-    var fabricaFagos = [];
-    fabricaFagos = fagos.sort((a, b) => {
-      if(a === b) { return 0; }
-
-      return a < b ? -1 : 1;
-    }).map((fago) => {
-      return {fago: fago, peso: 90 - fago};
-    });
-
-    obterFagoAleatorio = (function () {
-      var pesoTotal = fabricaFagos.slice(0, dificuldade).reduce((acc, fago) => {
-            return acc += fago.peso;
-          }, 0);
-
-      return function() {
-        var pesoEscolhido = obterNumeroAleatorio(0, pesoTotal - 1);
-        var fagoEscolhido = 0;
-        for (var i = 0; i < fabricaFagos.length; i++) {
-          pesoEscolhido -= fabricaFagos[i].peso;
-          if(pesoEscolhido < 0) {
-            fagoEscolhido = fabricaFagos[i].fago;
-            break;
-          }
-        }
-        return fagoEscolhido;
-      }
-    })();
-
     preencherFagosIniciais('j1');
     preencherFagosIniciais('j2');
 
@@ -115,10 +67,11 @@
   }
 
   function criarFago(jogador) {
-    var fago = obterFagoAleatorio();
-    var elemento = $('<li class="noselect">' + fago + '</li>');
-    $('#' + jogador).append(elemento);
-    elemento.slideDown();
+    $.get('/api/game/randomPhago').done((fago) => {
+      var elemento = $('<li class="noselect">' + fago + '</li>');
+      $('#' + jogador).append(elemento);
+      elemento.slideDown();
+    });
   }
 
   function calcularTamanhoRetangulo(evento) {
