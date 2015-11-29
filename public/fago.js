@@ -150,7 +150,14 @@
     criarFago(jogadorAtivo);
 
     $('#painel li').addClass('color-transition');
-    var pontoInicial = preencherQuadradosOcupados(jogadorAtivo);
+
+    var selecionados = $('#painel .ui-selected');
+
+    selecionados.addClass('ocupado');
+    selecionados.addClass('ocupado' + jogadorAtivo);
+
+    var pontoInicial = extrairPonto(selecionados[0]);
+
     var grid = montarGrid();
     fagocitar(jogadorAtivo, grid, pontoInicial);
     contarPontos(grid);
@@ -175,17 +182,6 @@
 
     $('#placar-j1').text(placarJ1);
     $('#placar-j2').text(placarJ2);
-  }
-
-  function preencherQuadradosOcupados(jogador) {
-    var selecionados = $('#painel .ui-selected');
-
-    selecionados.addClass('ocupado');
-    selecionados.addClass('ocupado' + jogador);
-
-    var pontoInicial = extrairPonto(selecionados[0]);
-
-    return pontoInicial;
   }
 
   function fagocitar(jogador, grid, pontoInicial) {
