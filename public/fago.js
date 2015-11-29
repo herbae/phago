@@ -55,7 +55,7 @@
         selecionarFago(elemento);
       };
     });
-    
+
     preencherFagosIniciais('j1');
     preencherFagosIniciais('j2');
 
@@ -284,9 +284,5 @@
     $('#painel li').removeClass('ui-selected');
     $('#painel').selectable('disable');
     $('painel li').removeClass('color-transition');
-  }
-
-  function obterNumeroAleatorio(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 })();
