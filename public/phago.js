@@ -188,8 +188,6 @@
       data: JSON.stringify(points),
       contentType: 'application/json',
       url: '/api/game/play'
-    }).done(() => {
-      console.log('post ok');
     });
   }
 

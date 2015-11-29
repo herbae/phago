@@ -1,6 +1,7 @@
 'use strict';
 
 var express = require('express');
+var ws = require('../websockets');
 
 var app = module.exports = express.Router();
 
@@ -16,13 +17,20 @@ app.get('/', (req, res) => {
 });
 
 app.post('/play', (req, res) => {
-  console.log('points received ', req.body);
+  play(req.body);
+  ws.broadcast('played', req.body);
   res.sendStatus(200);
 });
 
 app.get('/randomPhago', (req, res) => {
   res.json(getRandomPhago());
 });
+
+function play(points) {
+  points.forEach((point) => {
+    game.grid[point.y][point.x] = 'what';
+  });
+}
 
 function createGame() {
   var game = {
