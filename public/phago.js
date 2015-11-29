@@ -77,7 +77,7 @@
     elemento.slideDown();
   }
 
-  function getRandomPhago(jogador) {
+  function pushRandomPhago(jogador) {
     $.get('/api/game/randomPhago').done((phago) => {
       pushPhago(jogador, phago);
     });
@@ -156,7 +156,7 @@
     };
 
     $(selectedPhago).slideUp();
-    getRandomPhago(jogadorAtivo);
+    pushRandomPhago(jogadorAtivo);
 
     $('#painel li').addClass('color-transition');
 
