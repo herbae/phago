@@ -28,8 +28,20 @@ function createGame() {
   }
 
   game.grid = createNewGrid(game.size);
+  game.initialFagos = {
+    j1: getInitialFagos(game.phagoQuantity),
+    j2: getInitialFagos(game.phagoQuantity)
+  }
 
   return game;
+
+  function getInitialFagos(quantity) {
+    var phagos = [];
+    for(var i = 0; i < quantity; i++) {
+      phagos.push(obterFagoAleatorio());
+    }
+    return phagos;
+  }
 }
 
 function createNewGrid(size) {

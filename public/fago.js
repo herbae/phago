@@ -3,7 +3,6 @@
 (function () {
   var jogadorAtivo = 'j1';
   var fagoSelecionado;
-  var quantidadeFagos = 7;
   var connection;
   var game;
 
@@ -65,17 +64,22 @@
     preencherFagosIniciais('j2');
 
     function preencherFagosIniciais(jogador) {
-      for(var i = 0; i < quantidadeFagos; i++) {
-        criarFago(jogador);
+      var phagos = game.initialFagos[jogador];
+      for(var i = 0; i < phagos.length; i++) {
+        criarPhago(jogador, phagos[i]);
       }
     }
   }
 
-  function criarFago(jogador) {
-    $.get('/api/game/randomPhago').done((fago) => {
-      var elemento = $('<li class="noselect">' + fago + '</li>');
-      $('#' + jogador).append(elemento);
-      elemento.slideDown();
+  function criarPhago(jogador, phago) {
+    var elemento = $('<li class="noselect">' + phago + '</li>');
+    $('#' + jogador).append(elemento);
+    elemento.slideDown();
+  }
+
+  function obterFagoAleatorio(jogador) {
+    $.get('/api/game/randomPhago').done((phago) => {
+      criarPhago(jogador, phago);
     });
   }
 
@@ -152,7 +156,7 @@
     };
 
     $(fagoSelecionado).slideUp();
-    criarFago(jogadorAtivo);
+    obterFagoAleatorio(jogadorAtivo);
 
     $('#painel li').addClass('color-transition');
 
