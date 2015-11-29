@@ -1,7 +1,7 @@
 {
-  "name": "fago",
+  "name": "phago",
   "version": "1.0.0",
-  "description": "Virus bacteriófago",
+  "description": "A math game involving viruses and bacteria.",
   "main": "index.js",
   "scripts": {
     "postinstall": "./node_modules/bower/bin/bower install",

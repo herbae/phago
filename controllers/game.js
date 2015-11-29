@@ -4,7 +4,7 @@ var express = require('express');
 
 var app = module.exports = express.Router();
 
-var obterFagoAleatorio = fabricaFagos();
+var getRandomPhago = phagoFactory();
 
 var game;
 
@@ -16,7 +16,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/randomPhago', (req, res) => {
-  res.json(obterFagoAleatorio());
+  res.json(getRandomPhago());
 });
 
 function createGame() {
@@ -28,17 +28,17 @@ function createGame() {
   }
 
   game.grid = createNewGrid(game.sideSize);
-  game.initialFagos = {
-    j1: getInitialFagos(game.phagoQuantity),
-    j2: getInitialFagos(game.phagoQuantity)
+  game.initialPhagos = {
+    j1: getInitialPhagos(game.phagoQuantity),
+    j2: getInitialPhagos(game.phagoQuantity)
   }
 
   return game;
 
-  function getInitialFagos(quantity) {
+  function getInitialPhagos(quantity) {
     var phagos = [];
     for(var i = 0; i < quantity; i++) {
-      phagos.push(obterFagoAleatorio());
+      phagos.push(getRandomPhago());
     }
     return phagos;
   }
@@ -57,30 +57,30 @@ function createNewGrid(size) {
   return grid;
 }
 
-function fabricaFagos() {
-  var fagos = [];
+function phagoFactory() {
+  var phagos = [];
   for(var i = 2; i < 10; i++) {
     for(var j = 2; j < 10; j++) {
       var produto = i * j;
-      if(fagos.indexOf(produto) === -1) {
-        fagos.push(produto);
+      if(phagos.indexOf(produto) === -1) {
+        phagos.push(produto);
       }
     }
   }
 
-  var fabricaFagos = [];
-  fabricaFagos = fagos.sort((a, b) => {
+  var phagoFactory = [];
+  phagoFactory = phagos.sort((a, b) => {
     if(a === b) { return 0; }
 
     return a < b ? -1 : 1;
-  }).map((fago) => {
-    return {fago: fago, peso: 90 - fago};
+  }).map((phago) => {
+    return {phago: phago, peso: 90 - phago};
   });
 
   var dificuldade = 10;
-  var obterFagoAleatorio = (function () {
-    var pesoTotal = fabricaFagos.slice(0, dificuldade).reduce((acc, fago) => {
-          return acc += fago.peso;
+  var getRandomPhago = (function () {
+    var pesoTotal = phagoFactory.slice(0, dificuldade).reduce((acc, phago) => {
+          return acc += phago.peso;
         }, 0);
 
     function obterNumeroAleatorio(min, max) {
@@ -89,17 +89,17 @@ function fabricaFagos() {
 
     return function() {
       var pesoEscolhido = obterNumeroAleatorio(0, pesoTotal - 1);
-      var fagoEscolhido = 0;
-      for (var i = 0; i < fabricaFagos.length; i++) {
-        pesoEscolhido -= fabricaFagos[i].peso;
+      var phagoEscolhido = 0;
+      for (var i = 0; i < phagoFactory.length; i++) {
+        pesoEscolhido -= phagoFactory[i].peso;
         if(pesoEscolhido < 0) {
-          fagoEscolhido = fabricaFagos[i].fago;
+          phagoEscolhido = phagoFactory[i].phago;
           break;
         }
       }
-      return fagoEscolhido;
+      return phagoEscolhido;
     }
   })();
 
-  return obterFagoAleatorio;
+  return getRandomPhago;
 }
