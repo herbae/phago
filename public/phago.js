@@ -167,12 +167,30 @@
 
     var pontoInicial = extrairPonto(selecionados[0]);
 
+    var pontos = [];
+    for (var i = 0; i < selecionados.length; i++) {
+      pontos.push(extrairPonto(selecionados[i]));
+    }
+
+    play(pontos);
+
     var grid = montarGrid();
     fagocitar(jogadorAtivo, grid, pontoInicial);
     contarPontos(grid);
 
     jogadorAtivo = jogadorAtivo === 'j1' ? 'j2' : 'j1';
     limparJogada();
+  }
+
+  function play(points) {
+    $.ajax({
+      type: 'POST',
+      data: JSON.stringify(points),
+      contentType: 'application/json',
+      url: '/api/game/play'
+    }).done(() => {
+      console.log('post ok');
+    });
   }
 
   function contarPontos(grid) {

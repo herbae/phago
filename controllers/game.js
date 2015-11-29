@@ -15,6 +15,11 @@ app.get('/', (req, res) => {
   res.json(game);
 });
 
+app.post('/play', (req, res) => {
+  console.log('points received ', req.body);
+  res.sendStatus(200);
+});
+
 app.get('/randomPhago', (req, res) => {
   res.json(getRandomPhago());
 });
