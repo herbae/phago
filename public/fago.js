@@ -38,10 +38,10 @@
   }
 
   function inicializarPainel() {
-    for (var i = 1; i <= (game.size * game.size); i++) {
+    for (var i = 1; i <= (game.sideSize * game.sideSize); i++) {
       $('#painel').append('<li class="noselect" id="q' + i + '"></li>');
     }
-    $('#painel').css('width', (game.size * 2) + 'em');
+    $('#painel').css('width', (game.sideSize * 2) + 'em');
 
     $('#painel').selectable({
       delay: 150,
@@ -101,8 +101,8 @@
 
   function extrairPonto(quadrado) {
     var posicao = extrairPosicao(quadrado) - 1;
-    var x = (posicao % game.size) + 1;
-    var y = Math.floor(posicao / game.size) + 1;
+    var x = (posicao % game.sideSize) + 1;
+    var y = Math.floor(posicao / game.sideSize) + 1;
     return {x: x, y: y};
   }
 
@@ -179,8 +179,8 @@
     var placarJ1 = 0;
     var placarJ2 = 0;
 
-    for (var y = 0; y < game.size + 1; y++) {
-      for (var x = 0; x < game.size + 1; x++) {
+    for (var y = 0; y < game.sideSize + 1; y++) {
+      for (var x = 0; x < game.sideSize + 1; x++) {
         if(grid[y][x].jogador === "j1") {
           placarJ1++;
         } else if(grid[y][x].jogador === "j2") {
@@ -200,13 +200,13 @@
       if(ponto.x > 1) {
         pontos.push({x: ponto.x - 1, y: ponto.y});
       }
-      if(ponto.x < game.size) {
+      if(ponto.x < game.sideSize) {
         pontos.push({x: ponto.x + 1, y: ponto.y});
       }
       if(ponto.y > 1) {
         pontos.push({x: ponto.x, y: ponto.y - 1});
       }
-      if(ponto.y < game.size) {
+      if(ponto.y < game.sideSize) {
         pontos.push({x: ponto.x, y: ponto.y + 1});
       }
       return pontos;
@@ -265,9 +265,9 @@
   function montarGrid() {
     var grid = [];
 
-    for (var y = 0; y < game.size + 1; y++) {
+    for (var y = 0; y < game.sideSize + 1; y++) {
       grid.push([]);
-      for (var x = 0; x < game.size + 1; x++) {
+      for (var x = 0; x < game.sideSize + 1; x++) {
         grid[y][x] = "";
       }
     }

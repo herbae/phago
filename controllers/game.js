@@ -22,12 +22,12 @@ app.get('/randomPhago', (req, res) => {
 function createGame() {
   var game = {
     id: 1,
-    size: 20,
+    sideSize: 20,
     phagoQuantity: 7,
     level: 10
   }
 
-  game.grid = createNewGrid(game.size);
+  game.grid = createNewGrid(game.sideSize);
   game.initialFagos = {
     j1: getInitialFagos(game.phagoQuantity),
     j2: getInitialFagos(game.phagoQuantity)
