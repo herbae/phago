@@ -12,21 +12,6 @@
     inicializarWS();
     inicializarPainel();
     inicializarFabricaFagos();
-
-    $('#painel').selectable({
-      delay: 150,
-      stop: realizarJogada,
-      selecting: calcularTamanhoRetangulo,
-      unselecting: calcularTamanhoRetangulo,
-      disabled: true
-    });
-
-    $('.fagos').click((evento) => {
-      var elemento = evento.target;
-      if(elemento.parentNode.id === jogadorAtivo) {
-        selecionarFago(elemento);
-      };
-    });
   });
 
   function inicializarWS() {
@@ -53,9 +38,24 @@
       $('#painel').append('<li class="noselect" id="q' + i + '"></li>');
     }
     $('#painel').css('width', (lado * 2) + 'em');
+
+    $('#painel').selectable({
+      delay: 150,
+      stop: realizarJogada,
+      selecting: calcularTamanhoRetangulo,
+      unselecting: calcularTamanhoRetangulo,
+      disabled: true
+    });
   }
 
   function inicializarFabricaFagos() {
+    $('.fagos').click((evento) => {
+      var elemento = evento.target;
+      if(elemento.parentNode.id === jogadorAtivo) {
+        selecionarFago(elemento);
+      };
+    });
+    
     preencherFagosIniciais('j1');
     preencherFagosIniciais('j2');
 
