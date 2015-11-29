@@ -6,9 +6,44 @@ var app = module.exports = express.Router();
 
 var obterFagoAleatorio = fabricaFagos();
 
+var game;
+
+app.get('/', (req, res) => {
+  if(!game) {
+    game = createGame();
+  }
+  res.json(game);
+});
+
 app.get('/randomPhago', (req, res) => {
   res.json(obterFagoAleatorio());
 });
+
+function createGame() {
+  var game = {
+    id: 1,
+    size: 20,
+    phagoQuantity: 7,
+    level: 10
+  }
+
+  game.grid = createNewGrid(game.size);
+
+  return game;
+}
+
+function createNewGrid(size) {
+  var grid = [];
+
+  for (var y = 0; y < size + 1; y++) {
+    grid.push([]);
+    for (var x = 0; x < size + 1; x++) {
+      grid[y][x] = "";
+    }
+  }
+
+  return grid;
+}
 
 function fabricaFagos() {
   var fagos = [];
