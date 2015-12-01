@@ -72,8 +72,8 @@ function createNewGrid(size) {
 
 function phagoFactory() {
   var phagos = [];
-  for(var i = 2; i < 10; i++) {
-    for(var j = 2; j < 10; j++) {
+  for(var i = 1; i < 10; i++) {
+    for(var j = 1; j < 10; j++) {
       var produto = i * j;
       if(phagos.indexOf(produto) === -1) {
         phagos.push(produto);
@@ -90,7 +90,7 @@ function phagoFactory() {
     return {phago: phago, peso: 90 - phago};
   });
 
-  var dificuldade = 10;
+  var dificuldade = 19;
   var getRandomPhago = (function () {
     var pesoTotal = phagoFactory.slice(0, dificuldade).reduce((acc, phago) => {
           return acc += phago.peso;
