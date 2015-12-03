@@ -49,6 +49,7 @@
       player = 'p2';
     }
     console.log('i am', player);
+    $('#name-' + player).addClass('active');
     $('#name-p1').text(game.p1.name);
     $('#name-' + player).text(game[player].name);
 

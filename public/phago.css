@@ -64,6 +64,10 @@ body {
   -webkit-border-radius: 10px;
 }
 
+.active {
+  border: 2px solid;
+}
+
 .placar {
   width: 3em;
   margin: 0;
