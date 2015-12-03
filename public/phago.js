@@ -182,6 +182,12 @@
 
     var selecionados = $('#painel .ui-selected');
 
+/*acho que a ideia é essa:
+primeiro monto o grid e a jogada com os selecionados
+mando tudo pro servidor, ele avalia tudo e me devolve
+o que preciso pintar no tabuleiro (avisa ambos os jogadores)
+*/
+
     selecionados.addClass('ocupado');
     selecionados.addClass('ocupado' + player);
 
@@ -192,23 +198,11 @@
       pontos.push(extrairPonto(selecionados[i]));
     }
 
-    play(pontos);
-
     var grid = montarGrid();
     fagocitar(player, grid, pontoInicial);
     contarPontos(grid);
 
-    player = player === 'p1' ? 'p2' : 'p1';
     limparJogada();
-  }
-
-  function play(points) {
-    $.ajax({
-      type: 'POST',
-      data: JSON.stringify(points),
-      contentType: 'application/json',
-      url: '/api/game/play'
-    });
   }
 
   function contarPontos(grid) {
