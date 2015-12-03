@@ -1,31 +1,19 @@
 'use strict';
 
 (function () {
-  var jogadorAtivo = 'j1';
+  var jogadorAtivo;
   var selectedPhago;
   var connection;
   var game;
+  var myId;
 
   $(window).load(() => {
-    inicializarWS();
-
-    $.get('/api/game').done((data) => {
-      game = data;
-
-      initializePanel();
-      initializePhagoFactory();
-    });
-  });
-
-  function inicializarWS() {
     connection = new WebSocket(websocketHost())
     connection.onopen = function () {
       console.log('Websocket connected');
-      connection.send(JSON.stringify({topic: 'new-game'}));
     }
     connection.onmessage = function (e) {
       var payload = JSON.parse(e.data);
-      console.log('Received payload', payload);
       resolve(payload);
     }
 
@@ -36,16 +24,34 @@
         return 'ws://' + window.location.host;
       }
     }
+  });
 
-    function resolve(payload) {
-      switch(payload.topic) {
-        case 'new-game':
-          console.log('starting new game', payload.data);
-          break;
-        default:
-          break;
-      }
+  function resolve(payload) {
+    switch(payload.topic) {
+      case 'your-id':
+        console.log('my id is', payload.data);
+        myId = payload.data;
+        break;
+      case 'new-game':
+        console.log('starting new game', payload.data);
+        initializeGame(payload.data);
+        break;
+      default:
+        break;
     }
+  }
+
+  function initializeGame(newGame) {
+    game = newGame;
+    if(game.p1.id === myId) {
+      jogadorAtivo = 'j1';
+    } else {
+      jogadorAtivo = 'j2';
+    }
+    console.log('i am', jogadorAtivo);
+
+    initializePanel();
+    initializePhagoFactory();
   }
 
   function initializePanel() {

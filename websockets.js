@@ -2,17 +2,21 @@
 
 var _ = require('lodash');
 var ws = require('ws');
-var game = require('./services/gameSrv');
+var gameSrv = require('./services/gameSrv');
+var util = require('./services/util');
 var clients = [];
+var games = [];
 
 exports.connect = function (server) {
   var wss = new ws.Server({server: server});
   wss.on('connection', (ws) => {
     clients.push(ws);
 
-    exports.broadcast('new client joined');
-
     console.log('a client connected - ', clients.length, 'clients connected');
+    ws.id = util.getRandom(10000, 90000); //TODO generate better id
+    ws.send(JSON.stringify({topic: 'your-id', data: ws.id}));
+    ws.game = joinGame(ws.id);
+    ws.send(JSON.stringify({topic: 'new-game', data: ws.game}));
 
     ws.on('message', function incoming(message) {
       console.log('received: ', message);
@@ -24,6 +28,19 @@ exports.connect = function (server) {
       console.log('a client disconnected - ', clients.length, 'clients connected');
     });
   });
+
+  function joinGame(playerId) {
+    var game;
+    if(games.length && !games[games.length - 1].p2) {
+      game = games[games.length - 1];
+      game.p2 = {id: playerId, name: util.getRandomName()};
+    } else {
+      game = gameSrv.createGame();
+      game.p1 = {id: playerId, name: util.getRandomName()};
+      games.push(game);
+    }
+    return game;
+  }
 
   function resolve(message) {
     switch (message.topic) {
