@@ -5,6 +5,6 @@ exports.getRandom = function(min, max) {
 }
 
 exports.getRandomName = function() {
-  var names = ['João', 'Enzo', 'Theo', 'Vitor', 'Guilherme', 'Manoel', 'Joaquim'];
+  var names = ['João', 'Enzo', 'Theo', 'Vitor', 'Gui', 'Iury', 'Van', 'Rafa'];
   return names[exports.getRandom(1, names.length) - 1];
 }

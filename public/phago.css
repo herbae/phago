@@ -27,12 +27,12 @@ body {
   width: 5em;
 }
 
-#j1 {
+#p1 {
   float: left;
   clear: left;
 }
 
-#j1 li {
+#p1 li {
   background: blue;
   display: none;
 }
@@ -43,12 +43,12 @@ body {
   font-weight: bold;
 }
 
-#j2 {
+#p2 {
   float: right;
   clear: right;
 }
 
-#j2 li {
+#p2 li {
   background: red;
   display: none;
 }
@@ -145,11 +145,11 @@ body {
   background: rgba(0, 255, 0, 0.2);
 }
 
-#painel .ocupadoj1 {
+#painel .ocupadop1 {
   background: rgba(0, 0, 255, 0.8);
 }
 
-#painel .ocupadoj2 {
+#painel .ocupadop2 {
   background: rgba(255, 0, 0, 0.8);
 }
 

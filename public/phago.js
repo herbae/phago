@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  var jogadorAtivo;
+  var player;
   var selectedPhago;
   var connection;
   var game;
@@ -13,8 +13,7 @@
       console.log('Websocket connected');
     }
     connection.onmessage = function (e) {
-      var payload = JSON.parse(e.data);
-      resolve(payload);
+      resolve(JSON.parse(e.data));
     }
 
     function websocketHost() {
@@ -37,6 +36,7 @@
         initializeGame(payload.data);
         break;
       default:
+        console.log('unexpected data received', payload)
         break;
     }
   }
@@ -44,11 +44,13 @@
   function initializeGame(newGame) {
     game = newGame;
     if(game.p1.id === myId) {
-      jogadorAtivo = 'j1';
+      player = 'p1';
     } else {
-      jogadorAtivo = 'j2';
+      player = 'p2';
     }
-    console.log('i am', jogadorAtivo);
+    console.log('i am', player);
+    $('#name-p1').text(game.p1.name);
+    $('#name-' + player).text(game[player].name);
 
     initializePanel();
     initializePhagoFactory();
@@ -72,13 +74,13 @@
   function initializePhagoFactory() {
     $('.phagos').click((evento) => {
       var elemento = evento.target;
-      if(elemento.parentNode.id === jogadorAtivo) {
+      if(elemento.parentNode.id === player) {
         selectPhago(elemento);
       };
     });
 
-    pushInitialPhagos('j1');
-    pushInitialPhagos('j2');
+    pushInitialPhagos('p1');
+    pushInitialPhagos('p2');
 
     function pushInitialPhagos(jogador) {
       var phagos = game.initialPhagos[jogador];
@@ -173,14 +175,14 @@
     };
 
     $(selectedPhago).slideUp();
-    pushRandomPhago(jogadorAtivo);
+    pushRandomPhago(player);
 
     $('#painel li').addClass('color-transition');
 
     var selecionados = $('#painel .ui-selected');
 
     selecionados.addClass('ocupado');
-    selecionados.addClass('ocupado' + jogadorAtivo);
+    selecionados.addClass('ocupado' + player);
 
     var pontoInicial = extrairPonto(selecionados[0]);
 
@@ -192,10 +194,10 @@
     play(pontos);
 
     var grid = montarGrid();
-    fagocitar(jogadorAtivo, grid, pontoInicial);
+    fagocitar(player, grid, pontoInicial);
     contarPontos(grid);
 
-    jogadorAtivo = jogadorAtivo === 'j1' ? 'j2' : 'j1';
+    player = player === 'p1' ? 'p2' : 'p1';
     limparJogada();
   }
 
@@ -209,21 +211,21 @@
   }
 
   function contarPontos(grid) {
-    var placarJ1 = 0;
-    var placarJ2 = 0;
+    var placarP1 = 0;
+    var placarP2 = 0;
 
     for (var y = 0; y < game.sideSize + 1; y++) {
       for (var x = 0; x < game.sideSize + 1; x++) {
-        if(grid[y][x].jogador === "j1") {
-          placarJ1++;
-        } else if(grid[y][x].jogador === "j2") {
-          placarJ2++;
+        if(grid[y][x].jogador === "p1") {
+          placarP1++;
+        } else if(grid[y][x].jogador === "p2") {
+          placarP2++;
         }
       }
     }
 
-    $('#placar-j1').text(placarJ1);
-    $('#placar-j2').text(placarJ2);
+    $('#placar-p1').text(placarP1);
+    $('#placar-p2').text(placarP2);
   }
 
   function fagocitar(jogador, grid, pontoInicial) {
@@ -287,8 +289,8 @@
       for (var y = esquerdoAcima.y; y <= direitoAbaixo.y; y++) {
         for (var x = esquerdoAcima.x; x <= direitoAbaixo.x; x++) {
           grid[y][x].jogador = jogador; //inócuo
-          $('#q' + grid[y][x].id).removeClass('ocupadoj1');
-          $('#q' + grid[y][x].id).removeClass('ocupadoj2');
+          $('#q' + grid[y][x].id).removeClass('ocupadop1');
+          $('#q' + grid[y][x].id).removeClass('ocupadop2');
           $('#q' + grid[y][x].id).addClass('ocupado' + jogador);
         }
       }
@@ -310,7 +312,7 @@
     for (var i = 0; i < selecionados.length; i++) {
       var posicao = extrairPosicao(selecionados[i]);
       var ponto = extrairPonto(selecionados[i]);
-      var jogador = $(selecionados[i]).hasClass("ocupadoj1") ? "j1" : "j2";
+      var jogador = $(selecionados[i]).hasClass("ocupadop1") ? "p1" : "p2";
       grid[ponto.y][ponto.x] = {id: posicao, jogador: jogador};
     }
 

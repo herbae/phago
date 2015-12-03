@@ -12,8 +12,8 @@ exports.createGame = function() {
 
   game.grid = createNewGrid(game.sideSize);
   game.initialPhagos = {
-    j1: getInitialPhagos(game.phagoQuantity),
-    j2: getInitialPhagos(game.phagoQuantity)
+    p1: getInitialPhagos(game.phagoQuantity),
+    p2: getInitialPhagos(game.phagoQuantity)
   }
 
   return game;
