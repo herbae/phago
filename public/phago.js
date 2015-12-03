@@ -21,11 +21,12 @@
     connection = new WebSocket(websocketHost())
     connection.onopen = function () {
       console.log('Websocket connected');
-      connection.send(JSON.stringify({data: 'Some JSON data'}));
+      connection.send(JSON.stringify({topic: 'new-game'}));
     }
     connection.onmessage = function (e) {
       var payload = JSON.parse(e.data);
       console.log('Received payload', payload);
+      resolve(payload);
     }
 
     function websocketHost() {
@@ -33,6 +34,16 @@
         return 'wss://' + window.location.host;
       } else {
         return 'ws://' + window.location.host;
+      }
+    }
+
+    function resolve(payload) {
+      switch(payload.topic) {
+        case 'new-game':
+          console.log('starting new game', payload.data);
+          break;
+        default:
+          break;
       }
     }
   }

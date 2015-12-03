@@ -1,38 +1,8 @@
 'use strict';
 
-var express = require('express');
-var ws = require('../websockets');
-
-var app = module.exports = express.Router();
-
-var getRandomPhago = phagoFactory();
-
-var game;
-
-app.get('/', (req, res) => {
-  if(!game) {
-    game = createGame();
-  }
-  res.json(game);
-});
-
-app.post('/play', (req, res) => {
-  play(req.body);
-  ws.broadcast('played', req.body);
-  res.sendStatus(200);
-});
-
-app.get('/randomPhago', (req, res) => {
-  res.json(getRandomPhago());
-});
-
-function play(points) {
-  points.forEach((point) => {
-    game.grid[point.y][point.x] = 'what';
-  });
-}
-
-function createGame() {
+exports.getRandomPhago = phagoFactory();
+//FIXME I need some cleaning
+exports.createGame = function() {
   var game = {
     id: 1,
     sideSize: 20,
@@ -51,7 +21,7 @@ function createGame() {
   function getInitialPhagos(quantity) {
     var phagos = [];
     for(var i = 0; i < quantity; i++) {
-      phagos.push(getRandomPhago());
+      phagos.push(exports.getRandomPhago());
     }
     return phagos;
   }

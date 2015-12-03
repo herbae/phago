@@ -2,6 +2,7 @@
 
 var _ = require('lodash');
 var ws = require('ws');
+var game = require('./services/gameSrv');
 var clients = [];
 
 exports.connect = function (server) {
@@ -14,7 +15,8 @@ exports.connect = function (server) {
     console.log('a client connected - ', clients.length, 'clients connected');
 
     ws.on('message', function incoming(message) {
-      console.log('received: %s', JSON.parse(message).data);
+      console.log('received: ', message);
+      resolve(JSON.parse(message));
     });
 
     ws.on('close', () => {
@@ -22,6 +24,16 @@ exports.connect = function (server) {
       console.log('a client disconnected - ', clients.length, 'clients connected');
     });
   });
+
+  function resolve(message) {
+    switch (message.topic) {
+      case 'new-game':
+        console.log('starting new game');
+        break;
+      default:
+        break;
+    }
+  }
 }
 
 exports.broadcast = function(topic, data) {

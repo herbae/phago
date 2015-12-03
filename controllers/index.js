@@ -16,4 +16,4 @@ app.get('/', (req, res) => {
   res.sendFile('index.html', { root: '.'});
 });
 
-app.use('/api/game', require('./game'));
+app.use('/api/game', require('./gameCtrl'));
