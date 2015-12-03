@@ -13,6 +13,10 @@ exports.connect = function (server) {
 
     console.log('a client connected - ', clients.length, 'clients connected');
 
+    ws.on('message', function incoming(message) {
+      console.log('received: %s', JSON.parse(message).data);
+    });
+
     ws.on('close', () => {
       _.remove(clients, ws);
       console.log('a client disconnected - ', clients.length, 'clients connected');

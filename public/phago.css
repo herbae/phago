@@ -53,10 +53,21 @@ body {
   display: none;
 }
 
+.name {
+  width: 3em;
+  margin: 0;
+  font-size: 2em;
+  line-height: 2em;
+  padding: 0;
+  border-radius: 10px;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+}
+
 .placar {
   width: 3em;
   margin: 0;
-  margin-bottom: 1em;
+  margin-bottom: 0.5em;
   font-size: 2em;
   line-height: 2em;
   padding: 0;
@@ -66,13 +77,13 @@ body {
   background-color: #ddd;
 }
 
-#placar-j1 {
+.player1 {
   float: left;
   clear: left;
   color: blue;
 }
 
-#placar-j2 {
+.player2 {
   float: right;
   clear: right;
   color: red;

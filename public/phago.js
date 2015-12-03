@@ -11,7 +11,6 @@
 
     $.get('/api/game').done((data) => {
       game = data;
-      console.log(game);
 
       initializePanel();
       initializePhagoFactory();
@@ -22,6 +21,7 @@
     connection = new WebSocket(websocketHost())
     connection.onopen = function () {
       console.log('Websocket connected');
+      connection.send(JSON.stringify({data: 'Some JSON data'}));
     }
     connection.onmessage = function (e) {
       var payload = JSON.parse(e.data);
