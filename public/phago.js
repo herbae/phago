@@ -195,7 +195,6 @@
     /*********** old code ******/
 
     var grid = montarGrid();
-    // fagocitar(player, grid, pontoInicial);
     contarPontos(grid);
 
     limparJogada();
