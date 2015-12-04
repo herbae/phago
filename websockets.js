@@ -14,7 +14,7 @@ exports.connect = function (server) {
     ws.id = util.getRandom(10000, 90000); //TODO generate better id
     ws.send(JSON.stringify({topic: 'your-id', data: ws.id}));
     ws.game = joinGame(ws.id);
-    if(ws.game.p2) {
+    if(ws.game.p1 && ws.game.p2) {
       clients.filter((c) => {
         return c.id === ws.game.p1.id || c.id === ws.game.p2.id;
       }).forEach((c) => {
@@ -28,7 +28,6 @@ exports.connect = function (server) {
 
     ws.on('close', () => {
       _.remove(clients, ws);
-      console.log('a client disconnected - ', clients.length, 'clients connected');
     });
   });
 
