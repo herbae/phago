@@ -48,14 +48,15 @@ exports.connect = function (server) {
     switch (message.topic) {
       case 'move':
         var player = ws.game.p1.id === ws.id ? 'p1' : 'p2';
-        var move = gameSrv.move(player, message.data, ws.game.grid);
-        var wsData = JSON.stringify({topic: 'move', player: player, move: move});
-
+        var clientMove = message.data;
+        var move = gameSrv.move(player, clientMove, ws.game.grid);
+        var phago = gameSrv.getRandomPhago();
         //TODO improve this player search (maybe change to {game.ws.p1 & game.ws.p2})
         clients.filter((c) => {
           return c.id === ws.game.p1.id || c.id === ws.game.p2.id;
         }).forEach((c) => {
-          c.send(wsData);
+          c.send(JSON.stringify({topic: 'move', player: player, move: move, phago: clientMove.length}));
+          c.send(JSON.stringify({topic: 'new-phago', player: player, phago: phago}));
         });
         break;
       default:

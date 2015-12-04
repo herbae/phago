@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  var player;
+  var thisPlayer;
   var selectedPhago;
   var connection;
   var game;
@@ -36,7 +36,10 @@
         initializeGame(payload.data);
         break;
       case 'move':
-        renderMove(payload.player, payload.move);
+        renderMove(payload.player, payload.move, payload.phago);
+        break;
+      case 'new-phago':
+        pushPhago(payload.player, payload.phago);
         break;
       default:
         console.log('unexpected data received', payload)
@@ -47,17 +50,17 @@
   function initializeGame(newGame) {
     game = newGame;
     if(game.p1.id === myId) {
-      player = 'p1';
+      thisPlayer = 'p1';
     } else {
-      player = 'p2';
+      thisPlayer = 'p2';
     }
-    console.log('i am', player);
-    $('#name-' + player).addClass('active');
+    console.log('i am', thisPlayer);
+    $('#name-' + thisPlayer).addClass('active');
     $('#name-p1').text(game.p1.name);
     $('#name-p2').text(game.p2.name);
 
     initializePanel();
-    initializePhagoFactory();
+    initializePhagos();
   }
 
   function initializePanel() {
@@ -75,13 +78,13 @@
     });
   }
 
-  function initializePhagoFactory() {
+  function initializePhagos() {
     $('.phagos').click((event) => {
-      if(player !== game.activePlayer) {
+      if(thisPlayer !== game.activePlayer) {
         return;
       }
       var element = event.target;
-      if(element.parentNode.id === player) {
+      if(element.parentNode.id === thisPlayer) {
         selectPhago(element);
       };
     });
@@ -101,12 +104,6 @@
     var element = $('<li class="noselect">' + phago + '</li>');
     $('#' + player).append(element);
     element.slideDown();
-  }
-
-  function pushRandomPhago(player) {
-    $.get('/api/game/randomPhago').done((phago) => {
-      pushPhago(player, phago);
-    });
   }
 
   function calcularTamanhoRetangulo(evento) {
@@ -182,7 +179,6 @@
     };
 
     $(selectedPhago).slideUp();
-    pushRandomPhago(player);
 
     $('#painel li').addClass('color-transition');
 
@@ -203,6 +199,7 @@
     limparJogada();
   }
 
+//FIXME this belongs in server
   function contarPontos(grid) {
     var placarP1 = 0;
     var placarP2 = 0;
@@ -221,12 +218,22 @@
     $('#placar-p2').text(placarP2);
   }
 
-  function renderMove(player, move) {
+  function renderMove(player, move, phago) {
     for (var i = 0; i < move.length; i++) {
       var element = '#q' + move[i].position;
       $(element).removeClass('ocupadop1');
       $(element).removeClass('ocupadop2');
       $(element).addClass('ocupado' + player);
+    }
+
+    if(game.activePlayer !== thisPlayer) {
+      var phagos = $('#' + game.activePlayer + ' li');
+      for (var i = 0; i < phagos.length; i++) {
+        if($(phagos[i]).text() == phago) {
+          $(phagos[i]).slideUp();
+          break;
+        }
+      }
     }
     game.activePlayer = player === 'p1' ? 'p2' : 'p1';
   }
