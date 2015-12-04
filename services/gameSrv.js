@@ -21,7 +21,8 @@ exports.createGame = function() {
     id: 1,
     sideSize: 20,
     phagoQuantity: 7,
-    level: 10
+    level: 10,
+    activePlayer: 'p1'
   }
 
   game.grid = createNewGrid(game.sideSize);

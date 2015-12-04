@@ -77,6 +77,9 @@
 
   function initializePhagoFactory() {
     $('.phagos').click((event) => {
+      if(player !== game.activePlayer) {
+        return;
+      }
       var element = event.target;
       if(element.parentNode.id === player) {
         selectPhago(element);
@@ -225,7 +228,7 @@
       $(element).removeClass('ocupadop2');
       $(element).addClass('ocupado' + player);
     }
-
+    game.activePlayer = player === 'p1' ? 'p2' : 'p1';
   }
 
   function montarGrid() {
