@@ -63,10 +63,3 @@ exports.connect = function (server) {
     }
   }
 }
-
-exports.broadcast = function(topic, data) {
-  var json = JSON.stringify({topic: topic, data: data});
-  clients.forEach(function (client) {
-    client.send(json);
-  });
-}
