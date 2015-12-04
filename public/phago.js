@@ -54,7 +54,7 @@
     console.log('i am', player);
     $('#name-' + player).addClass('active');
     $('#name-p1').text(game.p1.name);
-    $('#name-' + player).text(game[player].name);
+    $('#name-p2').text(game.p2.name);
 
     initializePanel();
     initializePhagoFactory();
