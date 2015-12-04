@@ -76,33 +76,33 @@
   }
 
   function initializePhagoFactory() {
-    $('.phagos').click((evento) => {
-      var elemento = evento.target;
-      if(elemento.parentNode.id === player) {
-        selectPhago(elemento);
+    $('.phagos').click((event) => {
+      var element = event.target;
+      if(element.parentNode.id === player) {
+        selectPhago(element);
       };
     });
 
     pushInitialPhagos('p1');
     pushInitialPhagos('p2');
 
-    function pushInitialPhagos(jogador) {
-      var phagos = game.initialPhagos[jogador];
+    function pushInitialPhagos(player) {
+      var phagos = game.initialPhagos[player];
       for(var i = 0; i < phagos.length; i++) {
-        pushPhago(jogador, phagos[i]);
+        pushPhago(player, phagos[i]);
       }
     }
   }
 
-  function pushPhago(jogador, phago) {
-    var elemento = $('<li class="noselect">' + phago + '</li>');
-    $('#' + jogador).append(elemento);
-    elemento.slideDown();
+  function pushPhago(player, phago) {
+    var element = $('<li class="noselect">' + phago + '</li>');
+    $('#' + player).append(element);
+    element.slideDown();
   }
 
-  function pushRandomPhago(jogador) {
+  function pushRandomPhago(player) {
     $.get('/api/game/randomPhago').done((phago) => {
-      pushPhago(jogador, phago);
+      pushPhago(player, phago);
     });
   }
 
@@ -126,7 +126,7 @@
     var posicao = extrairPosicao(quadrado) - 1;
     var x = (posicao % game.sideSize) + 1;
     var y = Math.floor(posicao / game.sideSize) + 1;
-    return {pos: posicao + 1, x: x, y: y};
+    return {x: x, y: y};
   }
 
   function cantoDireitoAbaixo(figura) {
@@ -194,8 +194,6 @@
 
     /*********** old code ******/
 
-    // var pontoInicial = extrairPonto(selecionados[0]);
-    //
     var grid = montarGrid();
     // fagocitar(player, grid, pontoInicial);
     contarPontos(grid);
@@ -223,81 +221,12 @@
 
   function renderMove(player, move) {
     for (var i = 0; i < move.length; i++) {
-      var element = '#q' + move[i].pos;
+      var element = '#q' + move[i].position;
       $(element).removeClass('ocupadop1');
       $(element).removeClass('ocupadop2');
       $(element).addClass('ocupado' + player);
     }
 
-  }
-
-  function fagocitar(jogador, grid, pontoInicial) {
-    function pontosAoRedor(ponto) {
-      var pontos = [];
-
-      if(ponto.x > 1) {
-        pontos.push({x: ponto.x - 1, y: ponto.y});
-      }
-      if(ponto.x < game.sideSize) {
-        pontos.push({x: ponto.x + 1, y: ponto.y});
-      }
-      if(ponto.y > 1) {
-        pontos.push({x: ponto.x, y: ponto.y - 1});
-      }
-      if(ponto.y < game.sideSize) {
-        pontos.push({x: ponto.x, y: ponto.y + 1});
-      }
-      return pontos;
-    }
-
-    Array.prototype.pIndexOf = function(p) {
-      for (var i = 0; i < this.length; i++) {
-        if (this[i].x == p.x && this[i].y == p.y) {
-          return i;
-        }
-      }
-      return -1;
-    }
-
-    var figura = [pontoInicial];
-
-    for (var i = 0; i < figura.length; i++) {
-      var ponto = figura[i];
-      var proximosPontos = pontosAoRedor(ponto);
-
-      proximosPontos.forEach((ponto) => {
-        if(figura.pIndexOf(ponto) === -1 && grid[ponto.y][ponto.x].jogador === jogador) {
-          figura.push(ponto);
-        }
-      });
-    }
-
-    var esquerdoAcima = cantoEsquerdoAcima(figura);
-    var direitoAbaixo = cantoDireitoAbaixo(figura);
-
-    var encontrouQuadradoCinza = false;
-    for (var y = esquerdoAcima.y; y <= direitoAbaixo.y; y++) {
-      for (var x = esquerdoAcima.x; x <= direitoAbaixo.x; x++) {
-        if(!grid[y][x]) {
-          encontrouQuadradoCinza = true;
-          break;
-        };
-      }
-      if(encontrouQuadradoCinza) {
-        break;
-      }
-    }
-
-    if(!encontrouQuadradoCinza) {
-      for (var y = esquerdoAcima.y; y <= direitoAbaixo.y; y++) {
-        for (var x = esquerdoAcima.x; x <= direitoAbaixo.x; x++) {
-          grid[y][x].jogador = jogador; //inócuo
-          $('#q' + grid[y][x].id).removeClass('ocupadop1');
-          $('#q' + grid[y][x].id).removeClass('ocupadop2');
-          $('#q' + grid[y][x].id).addClass('ocupado' + jogador);
-        }
-      }
-    }
   }
 
   function montarGrid() {

@@ -3,7 +3,13 @@
 exports.getRandomPhago = phagoFactory();
 //FIXME I need some cleaning
 
-exports.move = function(player, move) {
+exports.move = function(player, move, grid) {
+  for (var i = 0; i < move.length; i++) {
+    grid[move[i].y][move[i].x].player = player;
+    move[i].position = grid[move[i].y][move[i].x].position;
+  }
+
+  // fagocitar(player, grid, move[0]);
   return move;
 }
 
@@ -32,13 +38,85 @@ exports.createGame = function() {
   }
 }
 
+/*function fagocitar(jogador, grid, pontoInicial) {
+  function pontosAoRedor(ponto) {
+    var pontos = [];
+
+    if(ponto.x > 1) {
+      pontos.push({x: ponto.x - 1, y: ponto.y});
+    }
+    if(ponto.x < game.sideSize) {
+      pontos.push({x: ponto.x + 1, y: ponto.y});
+    }
+    if(ponto.y > 1) {
+      pontos.push({x: ponto.x, y: ponto.y - 1});
+    }
+    if(ponto.y < game.sideSize) {
+      pontos.push({x: ponto.x, y: ponto.y + 1});
+    }
+    return pontos;
+  }
+
+  Array.prototype.pIndexOf = function(p) {
+    for (var i = 0; i < this.length; i++) {
+      if (this[i].x == p.x && this[i].y == p.y) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
+  var figura = [pontoInicial];
+
+  for (var i = 0; i < figura.length; i++) {
+    var ponto = figura[i];
+    var proximosPontos = pontosAoRedor(ponto);
+
+    proximosPontos.forEach((ponto) => {
+      if(figura.pIndexOf(ponto) === -1 && grid[ponto.y][ponto.x].jogador === jogador) {
+        figura.push(ponto);
+      }
+    });
+  }
+
+  var esquerdoAcima = cantoEsquerdoAcima(figura);
+  var direitoAbaixo = cantoDireitoAbaixo(figura);
+
+  var encontrouQuadradoCinza = false;
+  for (var y = esquerdoAcima.y; y <= direitoAbaixo.y; y++) {
+    for (var x = esquerdoAcima.x; x <= direitoAbaixo.x; x++) {
+      if(!grid[y][x]) {
+        encontrouQuadradoCinza = true;
+        break;
+      };
+    }
+    if(encontrouQuadradoCinza) {
+      break;
+    }
+  }
+
+  if(!encontrouQuadradoCinza) {
+    for (var y = esquerdoAcima.y; y <= direitoAbaixo.y; y++) {
+      for (var x = esquerdoAcima.x; x <= direitoAbaixo.x; x++) {
+        grid[y][x].jogador = jogador; //inócuo
+        $('#q' + grid[y][x].id).removeClass('ocupadop1');
+        $('#q' + grid[y][x].id).removeClass('ocupadop2');
+        $('#q' + grid[y][x].id).addClass('ocupado' + jogador);
+      }
+    }
+  }
+}*/
+
 function createNewGrid(size) {
   var grid = [];
 
+  var pos = 1;
   for (var y = 0; y < size + 1; y++) {
     grid.push([]);
     for (var x = 0; x < size + 1; x++) {
-      grid[y][x] = "";
+      if(x > 0 && y > 0) {
+        grid[y][x] = {position: pos++};
+      }
     }
   }
 
