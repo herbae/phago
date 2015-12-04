@@ -35,6 +35,9 @@
         console.log('starting new game', payload.data);
         initializeGame(payload.data);
         break;
+      case 'move':
+        renderMove(payload.player, payload.move);
+        break;
       default:
         console.log('unexpected data received', payload)
         break;
@@ -123,7 +126,7 @@
     var posicao = extrairPosicao(quadrado) - 1;
     var x = (posicao % game.sideSize) + 1;
     var y = Math.floor(posicao / game.sideSize) + 1;
-    return {x: x, y: y};
+    return {pos: posicao + 1, x: x, y: y};
   }
 
   function cantoDireitoAbaixo(figura) {
@@ -182,11 +185,6 @@
 
     var selecionados = $('#painel .ui-selected');
 
-/*acho que a ideia é essa:
-primeiro monto o grid e a jogada com os selecionados
-mando tudo pro servidor, ele avalia tudo e me devolve
-o que preciso pintar no tabuleiro (avisa ambos os jogadores)
-*/
     var move = [];
     for (var i = 0; i < selecionados.length; i++) {
       move.push(extrairPonto(selecionados[i]));
@@ -196,13 +194,10 @@ o que preciso pintar no tabuleiro (avisa ambos os jogadores)
 
     /*********** old code ******/
 
-    selecionados.addClass('ocupado');
-    selecionados.addClass('ocupado' + player);
-
-    var pontoInicial = extrairPonto(selecionados[0]);
-
+    // var pontoInicial = extrairPonto(selecionados[0]);
+    //
     var grid = montarGrid();
-    fagocitar(player, grid, pontoInicial);
+    // fagocitar(player, grid, pontoInicial);
     contarPontos(grid);
 
     limparJogada();
@@ -224,6 +219,16 @@ o que preciso pintar no tabuleiro (avisa ambos os jogadores)
 
     $('#placar-p1').text(placarP1);
     $('#placar-p2').text(placarP2);
+  }
+
+  function renderMove(player, move) {
+    for (var i = 0; i < move.length; i++) {
+      var element = '#q' + move[i].pos;
+      $(element).removeClass('ocupadop1');
+      $(element).removeClass('ocupadop2');
+      $(element).addClass('ocupado' + player);
+    }
+
   }
 
   function fagocitar(jogador, grid, pontoInicial) {

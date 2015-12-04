@@ -3,10 +3,8 @@
 exports.getRandomPhago = phagoFactory();
 //FIXME I need some cleaning
 
-exports.move = function(playerId, move) {
-  console.log(playerId, 'will play', move);
-
-  return {id: playerId, move: move};
+exports.move = function(player, move) {
+  return move;
 }
 
 exports.createGame = function() {

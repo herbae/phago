@@ -44,8 +44,16 @@ exports.connect = function (server) {
   function resolve(ws, message) {
     switch (message.topic) {
       case 'move':
-        var move = gameSrv.move(ws.id, message.data);
-        ws.send(JSON.stringify({topic: 'move', data: move}));
+        var player = ws.game.p1.id === ws.id ? 'p1' : 'p2';
+        var move = gameSrv.move(player, message.data);
+        var wsData = JSON.stringify({topic: 'move', player: player, move: move});
+
+        //TODO improve this player search (maybe change data structure)
+        clients.filter((c) => {
+          return c.id === ws.game.p1.id || c.id === ws.game.p2.id;
+        }).forEach((c) => {
+          c.send(wsData);
+        });
         break;
       default:
         break;
