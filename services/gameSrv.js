@@ -9,8 +9,11 @@ exports.move = function(player, move, grid) {
     move[i].position = grid[move[i].y][move[i].x].position;
   }
 
-  // fagocitar(player, grid, move[0]);
-  return move;
+  var phago = phagocyte(player, grid, move[0]);
+
+  var totalMove = move.concat(phago);
+
+  return totalMove;
 }
 
 exports.createGame = function() {
@@ -38,20 +41,20 @@ exports.createGame = function() {
   }
 }
 
-/*function fagocitar(jogador, grid, pontoInicial) {
+function phagocyte(player, grid, pontoInicial) {
   function pontosAoRedor(ponto) {
     var pontos = [];
 
     if(ponto.x > 1) {
       pontos.push({x: ponto.x - 1, y: ponto.y});
     }
-    if(ponto.x < game.sideSize) {
+    if(ponto.x < grid.length - 1) {
       pontos.push({x: ponto.x + 1, y: ponto.y});
     }
     if(ponto.y > 1) {
       pontos.push({x: ponto.x, y: ponto.y - 1});
     }
-    if(ponto.y < game.sideSize) {
+    if(ponto.y < grid.length - 1) {
       pontos.push({x: ponto.x, y: ponto.y + 1});
     }
     return pontos;
@@ -73,7 +76,7 @@ exports.createGame = function() {
     var proximosPontos = pontosAoRedor(ponto);
 
     proximosPontos.forEach((ponto) => {
-      if(figura.pIndexOf(ponto) === -1 && grid[ponto.y][ponto.x].jogador === jogador) {
+      if(figura.pIndexOf(ponto) === -1 && grid[ponto.y][ponto.x].player === player) {
         figura.push(ponto);
       }
     });
@@ -85,7 +88,7 @@ exports.createGame = function() {
   var encontrouQuadradoCinza = false;
   for (var y = esquerdoAcima.y; y <= direitoAbaixo.y; y++) {
     for (var x = esquerdoAcima.x; x <= direitoAbaixo.x; x++) {
-      if(!grid[y][x]) {
+      if(!grid[y][x].player) {
         encontrouQuadradoCinza = true;
         break;
       };
@@ -95,17 +98,36 @@ exports.createGame = function() {
     }
   }
 
+  var phagocyte = []
   if(!encontrouQuadradoCinza) {
     for (var y = esquerdoAcima.y; y <= direitoAbaixo.y; y++) {
       for (var x = esquerdoAcima.x; x <= direitoAbaixo.x; x++) {
-        grid[y][x].jogador = jogador; //inócuo
-        $('#q' + grid[y][x].id).removeClass('ocupadop1');
-        $('#q' + grid[y][x].id).removeClass('ocupadop2');
-        $('#q' + grid[y][x].id).addClass('ocupado' + jogador);
+        grid[y][x].player = player;
+        phagocyte.push({x: x, y: y, position: grid[y][x].position});
       }
     }
   }
-}*/
+
+  return phagocyte;
+}
+
+function cantoDireitoAbaixo(figura) {
+  return figura.reduce((canto, ponto) => {
+    return {
+      x: canto.x > ponto.x ? canto.x : ponto.x,
+      y: canto.y > ponto.y ? canto.y : ponto.y
+    };
+  }, {x: 0, y: 0});
+}
+
+function cantoEsquerdoAcima(figura) {
+  return figura.reduce((canto, ponto) => {
+    return {
+      x: canto.x < ponto.x ? canto.x : ponto.x,
+      y: canto.y < ponto.y ? canto.y : ponto.y
+    };
+  }, {x: Number.POSITIVE_INFINITY, y: Number.POSITIVE_INFINITY});
+}
 
 function createNewGrid(size) {
   var grid = [];
