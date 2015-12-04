@@ -187,16 +187,19 @@ primeiro monto o grid e a jogada com os selecionados
 mando tudo pro servidor, ele avalia tudo e me devolve
 o que preciso pintar no tabuleiro (avisa ambos os jogadores)
 */
+    var move = [];
+    for (var i = 0; i < selecionados.length; i++) {
+      move.push(extrairPonto(selecionados[i]));
+    }
+
+    connection.send(JSON.stringify({topic: 'move', data: move}));
+
+    /*********** old code ******/
 
     selecionados.addClass('ocupado');
     selecionados.addClass('ocupado' + player);
 
     var pontoInicial = extrairPonto(selecionados[0]);
-
-    var pontos = [];
-    for (var i = 0; i < selecionados.length; i++) {
-      pontos.push(extrairPonto(selecionados[i]));
-    }
 
     var grid = montarGrid();
     fagocitar(player, grid, pontoInicial);

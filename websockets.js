@@ -19,8 +19,7 @@ exports.connect = function (server) {
     ws.send(JSON.stringify({topic: 'new-game', data: ws.game}));
 
     ws.on('message', function incoming(message) {
-      console.log('received: ', message);
-      resolve(JSON.parse(message));
+      resolve(ws, JSON.parse(message));
     });
 
     ws.on('close', () => {
@@ -42,10 +41,11 @@ exports.connect = function (server) {
     return game;
   }
 
-  function resolve(message) {
+  function resolve(ws, message) {
     switch (message.topic) {
-      case 'new-game':
-        console.log('starting new game');
+      case 'move':
+        var move = gameSrv.move(ws.id, message.data);
+        ws.send(JSON.stringify({topic: 'move', data: move}));
         break;
       default:
         break;
