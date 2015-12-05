@@ -60,7 +60,6 @@ exports.connect = function (server) {
         });
         break;
       case 'ping':
-        console.log('ping from client', ws.id);
       default:
         break;
     }
