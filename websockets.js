@@ -59,6 +59,8 @@ exports.connect = function (server) {
           c.send(JSON.stringify({topic: 'new-phago', player: player, phago: phago}));
         });
         break;
+      case 'ping':
+        console.log('ping from client', ws.id);
       default:
         break;
     }

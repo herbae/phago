@@ -11,6 +11,14 @@
     connection = new WebSocket(websocketHost())
     connection.onopen = function () {
       console.log('Websocket connected');
+
+      keepAlive();
+      function keepAlive() {
+        setTimeout(() => {
+          connection.send(JSON.stringify({topic: 'ping'}));
+          keepAlive();
+        }, 10000);
+      }
     }
     connection.onmessage = function (e) {
       resolve(JSON.parse(e.data));
