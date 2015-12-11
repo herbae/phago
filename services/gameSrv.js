@@ -26,20 +26,8 @@ exports.createGame = function() {
   }
 
   game.grid = createNewGrid(game.sideSize);
-  game.initialPhagos = {
-    p1: getInitialPhagos(game.phagoQuantity),
-    p2: getInitialPhagos(game.phagoQuantity)
-  }
 
   return game;
-
-  function getInitialPhagos(quantity) {
-    var phagos = [];
-    for(var i = 0; i < quantity; i++) {
-      phagos.push(exports.getRandomPhago());
-    }
-    return phagos;
-  }
 }
 
 function phagocyte(player, grid, pontoInicial) {

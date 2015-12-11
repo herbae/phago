@@ -49,10 +49,17 @@
       case 'new-phago':
         pushPhago(payload.player, payload.phago);
         break;
+      case 'remove-phago':
+        removePhago(payload.data);
+        break;
       default:
         console.log('unexpected data received', payload)
         break;
     }
+  }
+
+  function removePhago(phagoId) {
+    $('#' + phagoId).slideUp();
   }
 
   function initializeGame(newGame) {
@@ -101,7 +108,7 @@
     pushInitialPhagos('p2');
 
     function pushInitialPhagos(player) {
-      var phagos = game.initialPhagos[player];
+      var phagos = game[player].initialPhagos;
       for(var i = 0; i < phagos.length; i++) {
         pushPhago(player, phagos[i]);
       }
@@ -109,7 +116,7 @@
   }
 
   function pushPhago(player, phago) {
-    var element = $('<li class="noselect">' + phago + '</li>');
+    var element = $('<li id="' + phago.id + '" class="noselect">' + phago.phago + '</li>');
     $('#' + player).append(element);
     element.slideDown();
   }
@@ -186,7 +193,7 @@
       return;
     };
 
-    $(selectedPhago).slideUp();
+    // $(selectedPhago).slideUp();
 
     $('#painel li').addClass('color-transition');
 
@@ -197,7 +204,9 @@
       move.push(extrairPonto(selecionados[i]));
     }
 
-    connection.send(JSON.stringify({topic: 'move', data: move}));
+    var phagoId = $(selectedPhago)[0].id;
+
+    connection.send(JSON.stringify({topic: 'move', data: {phagoId: phagoId, move: move}}));
 
     /*********** old code ******/
 
@@ -234,15 +243,6 @@
       $(element).addClass('ocupado' + player);
     }
 
-    if(game.activePlayer !== thisPlayer) {
-      var phagos = $('#' + game.activePlayer + ' li');
-      for (var i = 0; i < phagos.length; i++) {
-        if($(phagos[i]).text() == phago) {
-          $(phagos[i]).slideUp();
-          break;
-        }
-      }
-    }
     game.activePlayer = player === 'p1' ? 'p2' : 'p1';
   }
 

@@ -63,13 +63,14 @@ function wsCtrl() {
         case 'move':
           var player = ws.game.p1.id === ws.id ? 'p1' : 'p2';
           var clientMove = message.data;
-          var move = gameSrv.move(player, clientMove, ws.game.grid);
-          var phago = gameSrv.getRandomPhago();
+          var move = gameSrv.move(player, clientMove.move, ws.game.grid);
+          var phago = gameCtrl.newPhago(ws.id);
           clients.filter((c) => {
             return c.id === ws.game.p1.id || c.id === ws.game.p2.id;
           }).forEach((c) => {
-            c.send(JSON.stringify({topic: 'move', player: player, move: move, phago: clientMove.length}));
+            c.send(JSON.stringify({topic: 'move', player: player, move: move}));
             c.send(JSON.stringify({topic: 'new-phago', player: player, phago: phago}));
+            c.send(JSON.stringify({topic: 'remove-phago', data: clientMove.phagoId}));
           });
           break;
         case 'ping':
