@@ -25,7 +25,15 @@ exports.connect = function (server) {
 
 function wsCtrl() {
   var clients = [];
-  
+
+  function sendMessage(game, topic, data) {
+    clients.filter((c) => {
+      return c.id === game.p1.id || c.id === game.p2.id;
+    }).forEach((c) => {
+      c.send(JSON.stringify({topic: topic, data: data}));
+    });
+  }
+
   return {
     welcomeNewPlayer: function(ws) {
       ws.id = util.getRandom(10000, 90000); //TODO generate better id
@@ -36,11 +44,7 @@ function wsCtrl() {
     joinGame: function(ws) {
       ws.game = gameCtrl.joinGame(ws.id);
       if(ws.game.p1 && ws.game.p2) {
-        clients.filter((c) => {
-          return c.id === ws.game.p1.id || c.id === ws.game.p2.id;
-        }).forEach((c) => {
-          c.send(JSON.stringify({topic: 'new-game', data: ws.game}));
-        });
+        sendMessage(ws.game, 'new-game', ws.game);
       }
     },
 
@@ -57,7 +61,6 @@ function wsCtrl() {
           var clientMove = message.data;
           var move = gameSrv.move(player, clientMove, ws.game.grid);
           var phago = gameSrv.getRandomPhago();
-          //TODO improve this player search (maybe change to {game.ws.p1 & game.ws.p2})
           clients.filter((c) => {
             return c.id === ws.game.p1.id || c.id === ws.game.p2.id;
           }).forEach((c) => {
