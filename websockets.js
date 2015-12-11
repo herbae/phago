@@ -66,14 +66,10 @@ function wsCtrl() {
           var move = gameSrv.move(player, clientMove.move, ws.game.grid);
           var phago = gameCtrl.newPhago(ws.id);
 
+          broadcast(ws.game, 'move', {player: player, move: move});
+          broadcast(ws.game, 'new-phago', {player: player, phago: phago});
           broadcast(ws.game, 'remove-phago', clientMove.phagoId);
 
-          clients.filter((c) => {
-            return c.id === ws.game.p1.id || c.id === ws.game.p2.id;
-          }).forEach((c) => {
-            c.send(JSON.stringify({topic: 'move', player: player, move: move}));
-            c.send(JSON.stringify({topic: 'new-phago', player: player, phago: phago}));
-          });
           break;
         case 'ping':
         default:

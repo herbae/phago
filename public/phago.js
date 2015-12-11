@@ -44,10 +44,10 @@
         initializeGame(payload.data);
         break;
       case 'move':
-        renderMove(payload.player, payload.move, payload.phago);
+        renderMove(payload.data.player, payload.data.move);
         break;
       case 'new-phago':
-        pushPhago(payload.player, payload.phago);
+        pushPhago(payload.data.player, payload.data.phago);
         break;
       case 'remove-phago':
         removePhago(payload.data);
@@ -235,7 +235,7 @@
     $('#placar-p2').text(placarP2);
   }
 
-  function renderMove(player, move, phago) {
+  function renderMove(player, move) {
     for (var i = 0; i < move.length; i++) {
       var element = '#q' + move[i].position;
       $(element).removeClass('ocupadop1');
