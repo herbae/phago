@@ -36,8 +36,8 @@
   function resolve(payload) {
     switch(payload.topic) {
       case 'your-id':
-        console.log('my id is', payload.id);
-        myId = payload.id;
+        console.log('my id is', payload.data);
+        myId = payload.data;
         break;
       case 'new-game':
         console.log('starting new game', payload.data);

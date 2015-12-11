@@ -26,25 +26,29 @@ exports.connect = function (server) {
 function wsCtrl() {
   var clients = [];
 
-  function sendMessage(game, topic, data) {
+  function send(client, topic, data) {
+    client.send(JSON.stringify({topic: topic, data: data}));
+  }
+
+  function broadcast(players, topic, data) {
     clients.filter((c) => {
-      return c.id === game.p1.id || c.id === game.p2.id;
+      return players[0].id === c.id || players[1].id === c.id;
     }).forEach((c) => {
-      c.send(JSON.stringify({topic: topic, data: data}));
+      send(c, topic, data);
     });
   }
 
   return {
     welcomeNewPlayer: function(ws) {
       ws.id = util.getRandom(10000, 90000); //TODO generate better id
-      ws.send(JSON.stringify({topic: 'your-id', id: ws.id}));
+      send(ws, 'your-id', ws.id);
       clients.push(ws);
     },
 
     joinGame: function(ws) {
       ws.game = gameCtrl.joinGame(ws.id);
       if(ws.game.p1 && ws.game.p2) {
-        sendMessage(ws.game, 'new-game', ws.game);
+        broadcast([ws.game.p1, ws.game.p2], 'new-game', ws.game);
       }
     },
 
