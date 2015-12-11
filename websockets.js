@@ -30,9 +30,9 @@ function wsCtrl() {
     client.send(JSON.stringify({topic: topic, data: data}));
   }
 
-  function broadcast(players, topic, data) {
+  function broadcast(game, topic, data) {
     clients.filter((c) => {
-      return players[0].id === c.id || players[1].id === c.id;
+      return game.p1.id === c.id || game.p2.id === c.id;
     }).forEach((c) => {
       send(c, topic, data);
     });
@@ -48,7 +48,7 @@ function wsCtrl() {
     joinGame: function(ws) {
       ws.game = gameCtrl.joinGame(ws.id);
       if(ws.game.p1 && ws.game.p2) {
-        broadcast([ws.game.p1, ws.game.p2], 'new-game', ws.game);
+        broadcast(ws.game, 'new-game', ws.game);
       }
     },
 
@@ -65,12 +65,14 @@ function wsCtrl() {
           var clientMove = message.data;
           var move = gameSrv.move(player, clientMove.move, ws.game.grid);
           var phago = gameCtrl.newPhago(ws.id);
+
+          broadcast(ws.game, 'remove-phago', clientMove.phagoId);
+
           clients.filter((c) => {
             return c.id === ws.game.p1.id || c.id === ws.game.p2.id;
           }).forEach((c) => {
             c.send(JSON.stringify({topic: 'move', player: player, move: move}));
             c.send(JSON.stringify({topic: 'new-phago', player: player, phago: phago}));
-            c.send(JSON.stringify({topic: 'remove-phago', data: clientMove.phagoId}));
           });
           break;
         case 'ping':
