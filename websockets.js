@@ -63,7 +63,7 @@ function wsCtrl() {
         case 'move':
           var player = ws.game.p1.id === ws.id ? 'p1' : 'p2';
           var clientMove = message.data;
-          var move = gameSrv.move(player, clientMove.move, ws.game.grid);
+          var move = gameCtrl.playerMove(ws.id, clientMove.move);
           var phago = gameCtrl.newPhago(ws.id);
 
           broadcast(ws.game, 'move', {player: player, move: move});

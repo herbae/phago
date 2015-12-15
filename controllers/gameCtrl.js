@@ -33,6 +33,16 @@ exports.newPhago = function(playerId) {
   return {id: id, phago: gameSrv.getRandomPhago()};
 }
 
+exports.playerMove = function(playerId, clientMove) {
+  var game = games.filter((g) => {
+    return g.p1.id === playerId || g.p2.id === playerId;
+  })[0];
+
+  var playerNumber = game.p1.id === playerId ? 'p1' : 'p2';
+
+  return gameSrv.move(playerNumber, clientMove, game.grid);
+}
+
 function getInitialPhagos(playerId, quantity) {
   var phagos = [];
   for(var i = 0; i < quantity; i++) {
