@@ -3,10 +3,12 @@
 var gameSrv = require('../services/gameSrv');
 var util = require('../services/util');
 var games = [];
+var players = [];
 
 exports.joinGame = function(playerId) {
   var game;
   var newPlayer = {id: playerId, name: util.getRandomName(), phagoCount: 0};
+  players.push(newPlayer);
 
   if(games.length && !games[games.length - 1].p2) {
     game = games[games.length - 1];
@@ -23,14 +25,10 @@ exports.joinGame = function(playerId) {
 }
 
 exports.newPhago = function(playerId) {
-  var player;
-  games.forEach((g) => {
-    if(g.p1.id === playerId) {
-      player = g.p1;
-    } else if(g.p2.id === playerId) {
-      player = g.p2;
-    }
-  });
+  var player = players.filter((p) => {
+    return p.id === playerId;
+  })[0];
+
   var id = 'player' + playerId + 'phago' + ++(player.phagoCount);
   return {id: id, phago: gameSrv.getRandomPhago()};
 }
