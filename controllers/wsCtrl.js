@@ -1,7 +1,9 @@
 'use strict';
 
+var _ = require('lodash');
 var gameCtrl = require('./gameCtrl');
 var util = require('../services/util');
+
 
 module.exports = (function() {
   var clients = [];

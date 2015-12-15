@@ -1,6 +1,5 @@
 'use strict';
 
-var _ = require('lodash');
 var ws = require('ws');
 var util = require('./services/util');
 var wsCtrl = require('./controllers/wsCtrl');
