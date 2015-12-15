@@ -2,7 +2,6 @@
 
 var _ = require('lodash');
 var ws = require('ws');
-var gameSrv = require('./services/gameSrv');
 var gameCtrl = require('./controllers/gameCtrl');
 var util = require('./services/util');
 var wsCtrl = wsCtrl();
