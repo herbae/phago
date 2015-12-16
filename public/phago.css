@@ -1,5 +1,5 @@
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Gloria Hallelujah', cursive;
   overflow-y: hidden;
 }
 
@@ -7,10 +7,7 @@ body {
   font-size: 4em;
   text-transform: uppercase;
   text-align: center;
-  background-color: #287369;
-  color: #bababa;
-  padding: 0.3em;
-  border-bottom: 10px solid #000;
+  padding: 0.5em 0 0;
 }
 
 .conteudo {
@@ -33,7 +30,8 @@ body {
 }
 
 #p1 li {
-  background: blue;
+  background-image: url(img/phago_bg_p1.png);
+  background-repeat: no-repeat;
   display: none;
 }
 
@@ -49,13 +47,14 @@ body {
 }
 
 #p2 li {
-  background: red;
+  background-image: url(img/phago_bg_p2.png);
+  background-repeat: no-repeat;
   display: none;
 }
 
 .name {
   width: 3em;
-  margin: 0;
+  margin: 0 0 0.3em;
   font-size: 2em;
   line-height: 2em;
   padding: 0;
@@ -78,19 +77,25 @@ body {
   border-radius: 10px;
   -moz-border-radius: 10px;
   -webkit-border-radius: 10px;
-  background-color: #ddd;
+}
+
+.placar.player1{
+  background-image: url('img/placar_p1.png');
+}
+.placar.player2{
+  background-image: url('img/placar_p2.png');
 }
 
 .player1 {
   float: left;
   clear: left;
-  color: blue;
+  color: #01C390;
 }
 
 .player2 {
   float: right;
   clear: right;
-  color: red;
+  color: #C1033B;
 }
 
 .conteudo li {
@@ -101,10 +106,10 @@ body {
 }
 
 .phagos li {
-  border: 3px solid #eee;
+  /*border: 3px solid #eee;
   border-radius: 3em;
   -moz-border-radius: 10px;
-  -webkit-border-radius: 3em;
+  -webkit-border-radius: 3em;*/
   width: 3em;
   height: 3em;
   line-height: 3em;
@@ -130,7 +135,7 @@ body {
 #painel li {
   width: 2em;
   height: 2em;
-  background-color: #ddd;
+  background-color: #F9F9F9;
   margin: -0.07em 0;
   border: 1px solid #fff;
   box-sizing: border-box;
@@ -146,15 +151,20 @@ body {
 }
 
 #painel .ui-selecting {
-  background: rgba(0, 255, 0, 0.2);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+#painel .ocupadop1, #painel .ocupadop2 {
+  background-size: 2em 2em;
+  background-repeat: no-repeat;
 }
 
 #painel .ocupadop1 {
-  background: rgba(0, 0, 255, 0.8);
+  background-image: url(img/green.gif);
 }
 
 #painel .ocupadop2 {
-  background: rgba(255, 0, 0, 0.8);
+  background-image: url(img/pink.gif);
 }
 
 #lados {
