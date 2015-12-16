@@ -52,10 +52,18 @@
       case 'remove-phago':
         removePhago(payload.data);
         break;
+      case 'score':
+        updateScore(payload.data);
+        break;
       default:
         console.log('unexpected data received', payload)
         break;
     }
+  }
+
+  function updateScore(score) {
+    $('#placar-p1').text(score.p1);
+    $('#placar-p2').text(score.p2);
   }
 
   function removePhago(phagoId) {
@@ -121,16 +129,23 @@
     element.slideDown();
   }
 
-  function calcularTamanhoRetangulo(evento) {
+  function calcularTamanhoRetangulo() {
     var selecting = $('.ui-selecting');
-    var pontosSelecionados = [];
+    var upperLeft = {x: game.sideSize + 1, y: game.sideSize + 1};
+    var lowerRight = {x: 0, y: 0};
     for(var i = 0; i < selecting.length; i++) {
-      pontosSelecionados.push(extrairPonto(selecting[i]));
+      var point = extrairPonto(selecting[i]);
+      if(point.x < upperLeft.x) {upperLeft.x = point.x};
+      if(point.x > lowerRight.x) {lowerRight.x = point.x};
+      if(point.y < upperLeft.y) {upperLeft.y = point.y};
+      if(point.y > lowerRight.y) {lowerRight.y = point.y};
     }
 
-    if(pontosSelecionados.length !== 0) {
-      mostrarConta(pontosSelecionados);
-    }
+    var x = lowerRight.x - upperLeft.x + 1;
+    var y = lowerRight.y - upperLeft.y + 1;
+
+    $('#conta').text(x + " x " + y + " = " + x * y);
+    $('#conta').show();
   }
 
   function extrairPosicao(quadrado) {
@@ -142,34 +157,6 @@
     var x = (posicao % game.sideSize) + 1;
     var y = Math.floor(posicao / game.sideSize) + 1;
     return {x: x, y: y};
-  }
-
-  function cantoDireitoAbaixo(figura) {
-    return figura.reduce((canto, ponto) => {
-      return {
-        x: canto.x > ponto.x ? canto.x : ponto.x,
-        y: canto.y > ponto.y ? canto.y : ponto.y
-      };
-    }, {x: 0, y: 0});
-  }
-
-  function cantoEsquerdoAcima(figura) {
-    return figura.reduce((canto, ponto) => {
-      return {
-        x: canto.x < ponto.x ? canto.x : ponto.x,
-        y: canto.y < ponto.y ? canto.y : ponto.y
-      };
-    }, {x: Number.POSITIVE_INFINITY, y: Number.POSITIVE_INFINITY});
-  }
-
-  function mostrarConta(pontosSelecionados) {
-    var menor = cantoEsquerdoAcima(pontosSelecionados);
-    var maior = cantoDireitoAbaixo(pontosSelecionados);
-
-    var x = maior.x - menor.x + 1;
-    var y = maior.y - menor.y + 1;
-    $('#conta').text(x + " x " + y + " = " + x * y);
-    $('#conta').show();
   }
 
   function selectPhago(phago) {
@@ -193,8 +180,6 @@
       return;
     };
 
-    // $(selectedPhago).slideUp();
-
     $('#painel li').addClass('color-transition');
 
     var selecionados = $('#painel .ui-selected');
@@ -208,31 +193,7 @@
 
     connection.send(JSON.stringify({topic: 'move', data: {phagoId: phagoId, move: move}}));
 
-    /*********** old code ******/
-
-    var grid = montarGrid();
-    contarPontos(grid);
-
     limparJogada();
-  }
-
-//FIXME this belongs in server
-  function contarPontos(grid) {
-    var placarP1 = 0;
-    var placarP2 = 0;
-
-    for (var y = 0; y < game.sideSize + 1; y++) {
-      for (var x = 0; x < game.sideSize + 1; x++) {
-        if(grid[y][x].jogador === "p1") {
-          placarP1++;
-        } else if(grid[y][x].jogador === "p2") {
-          placarP2++;
-        }
-      }
-    }
-
-    $('#placar-p1').text(placarP1);
-    $('#placar-p2').text(placarP2);
   }
 
   function renderMove(player, move) {
@@ -244,28 +205,6 @@
     }
 
     game.activePlayer = player === 'p1' ? 'p2' : 'p1';
-  }
-
-  function montarGrid() {
-    var grid = [];
-
-    for (var y = 0; y < game.sideSize + 1; y++) {
-      grid.push([]);
-      for (var x = 0; x < game.sideSize + 1; x++) {
-        grid[y][x] = "";
-      }
-    }
-
-    var selecionados = $('#painel .ocupado');
-
-    for (var i = 0; i < selecionados.length; i++) {
-      var posicao = extrairPosicao(selecionados[i]);
-      var ponto = extrairPonto(selecionados[i]);
-      var jogador = $(selecionados[i]).hasClass("ocupadop1") ? "p1" : "p2";
-      grid[ponto.y][ponto.x] = {id: posicao, jogador: jogador};
-    }
-
-    return grid;
   }
 
   function limparJogada() {

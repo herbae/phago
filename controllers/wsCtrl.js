@@ -47,10 +47,12 @@ module.exports = (function() {
           var clientMove = message.data;
           var move = gameCtrl.playerMove(ws.id, clientMove.move);
           var phago = gameCtrl.newPhago(ws.id);
+          var score = gameCtrl.score(ws.id);
 
           broadcast(ws.game, 'move', {player: player, move: move});
           broadcast(ws.game, 'new-phago', {player: player, phago: phago});
           broadcast(ws.game, 'remove-phago', clientMove.phagoId);
+          broadcast(ws.game, 'score', score);
 
           break;
         case 'ping':
