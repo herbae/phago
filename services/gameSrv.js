@@ -155,28 +155,24 @@ function phagoFactory() {
   });
 
   var dificuldade = 19;
-  var getRandomPhago = (function () {
-    var pesoTotal = phagoFactory.slice(0, dificuldade).reduce((acc, phago) => {
-          return acc += phago.peso;
-        }, 0);
+  var pesoTotal = phagoFactory.slice(0, dificuldade).reduce((acc, phago) => {
+    return acc += phago.peso;
+  }, 0);
 
-    function obterNumeroAleatorio(min, max) {
-      return Math.floor(Math.random() * (max - min + 1)) + min;
-    }
-
-    return function() {
-      var pesoEscolhido = obterNumeroAleatorio(0, pesoTotal - 1);
-      var phagoEscolhido = 0;
-      for (var i = 0; i < phagoFactory.length; i++) {
-        pesoEscolhido -= phagoFactory[i].peso;
-        if(pesoEscolhido < 0) {
-          phagoEscolhido = phagoFactory[i].phago;
-          break;
-        }
+  return function() {
+    var pesoEscolhido = obterNumeroAleatorio(0, pesoTotal - 1);
+    var phagoEscolhido = 0;
+    for (var i = 0; i < phagoFactory.length; i++) {
+      pesoEscolhido -= phagoFactory[i].peso;
+      if(pesoEscolhido < 0) {
+        phagoEscolhido = phagoFactory[i].phago;
+        break;
       }
-      return phagoEscolhido;
     }
-  })();
+    return phagoEscolhido;
+  }
 
-  return getRandomPhago;
+  function obterNumeroAleatorio(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
 }
