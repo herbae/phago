@@ -1,5 +1,7 @@
 'use strict';
 
+var util = require('./util');
+
 exports.getRandomPhago = phagoFactory();
 
 exports.move = function(player, move, grid) {
@@ -159,7 +161,7 @@ function phagoFactory() {
   }, 0);
 
   return function() {
-    var pesoEscolhido = obterNumeroAleatorio(0, pesoTotal - 1);
+    var pesoEscolhido = util.getRandom(0, pesoTotal - 1);
     var phagoEscolhido = 0;
     for (var i = 0; i < phagoFactory.length; i++) {
       pesoEscolhido -= phagoFactory[i].peso;
@@ -169,9 +171,5 @@ function phagoFactory() {
       }
     }
     return phagoEscolhido;
-  }
-
-  function obterNumeroAleatorio(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 }
