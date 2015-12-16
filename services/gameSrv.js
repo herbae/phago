@@ -1,7 +1,6 @@
 'use strict';
 
 exports.getRandomPhago = phagoFactory();
-//FIXME I need some cleaning
 
 exports.move = function(player, move, grid) {
   for (var i = 0; i < move.length; i++) {
@@ -31,24 +30,6 @@ exports.createGame = function() {
 }
 
 function phagocyte(player, grid, pontoInicial) {
-  function pontosAoRedor(ponto) {
-    var pontos = [];
-
-    if(ponto.x > 1) {
-      pontos.push({x: ponto.x - 1, y: ponto.y});
-    }
-    if(ponto.x < grid.length - 1) {
-      pontos.push({x: ponto.x + 1, y: ponto.y});
-    }
-    if(ponto.y > 1) {
-      pontos.push({x: ponto.x, y: ponto.y - 1});
-    }
-    if(ponto.y < grid.length - 1) {
-      pontos.push({x: ponto.x, y: ponto.y + 1});
-    }
-    return pontos;
-  }
-
   Array.prototype.pIndexOf = function(p) {
     for (var i = 0; i < this.length; i++) {
       if (this[i].x == p.x && this[i].y == p.y) {
@@ -62,7 +43,7 @@ function phagocyte(player, grid, pontoInicial) {
 
   for (var i = 0; i < figura.length; i++) {
     var ponto = figura[i];
-    var proximosPontos = pontosAoRedor(ponto);
+    var proximosPontos = pontosAdjacentes(ponto);
 
     proximosPontos.forEach((ponto) => {
       if(figura.pIndexOf(ponto) === -1 && grid[ponto.y][ponto.x].player === player) {
@@ -95,6 +76,24 @@ function phagocyte(player, grid, pontoInicial) {
         phagocyte.push({x: x, y: y, position: grid[y][x].position});
       }
     }
+  }
+
+  function pontosAdjacentes(ponto) {
+    var pontos = [];
+
+    if(ponto.x > 1) {
+      pontos.push({x: ponto.x - 1, y: ponto.y});
+    }
+    if(ponto.x < grid.length - 1) {
+      pontos.push({x: ponto.x + 1, y: ponto.y});
+    }
+    if(ponto.y > 1) {
+      pontos.push({x: ponto.x, y: ponto.y - 1});
+    }
+    if(ponto.y < grid.length - 1) {
+      pontos.push({x: ponto.x, y: ponto.y + 1});
+    }
+    return pontos;
   }
 
   return phagocyte;
