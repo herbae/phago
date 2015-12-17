@@ -91,7 +91,7 @@
       $('#painel').append('<li class="noselect" id="q' + i + '"></li>');
     }
     $('#painel').css('width', (game.sideSize * 2) + 'em');
-    $('#painel li').addClass('color-transition');
+    $('#painel li').addClass('image-transition');
     $('#painel').selectable({
       delay: 150,
       stop: realizarJogada,

@@ -139,7 +139,7 @@ body {
   -webkit-border-radius: 8px;
 }
 
-.color-transition {
+.image-transition {
   -webkit-transition: background-image 1s ease-in-out;
   transition: background-image 1s ease-in-out;
 }
