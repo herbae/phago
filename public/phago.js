@@ -91,7 +91,7 @@
       $('#painel').append('<li class="noselect" id="q' + i + '"></li>');
     }
     $('#painel').css('width', (game.sideSize * 2) + 'em');
-
+    $('#painel li').addClass('color-transition');
     $('#painel').selectable({
       delay: 150,
       stop: realizarJogada,
@@ -180,8 +180,6 @@
       return;
     };
 
-    $('#painel li').addClass('color-transition');
-
     var selecionados = $('#painel .ui-selected');
 
     var move = [];
@@ -211,6 +209,5 @@
     selectedPhago = undefined;
     $('#painel li').removeClass('ui-selected');
     $('#painel').selectable('disable');
-    $('painel li').removeClass('color-transition');
   }
 })();
