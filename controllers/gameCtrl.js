@@ -5,9 +5,9 @@ var util = require('../services/util');
 var games = [];
 var players = [];
 
-exports.joinGame = function(playerId) {
+exports.joinGame = function(playerId, playerName) {
   var game;
-  var newPlayer = {id: playerId, name: util.getRandomName(), phagoCount: 0};
+  var newPlayer = {id: playerId, name: playerName, phagoCount: 0};
   players.push(newPlayer);
 
   if(games.length && !games[games.length - 1].p2) {

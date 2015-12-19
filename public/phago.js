@@ -8,9 +8,20 @@
   var myId;
 
   $(window).load(() => {
+    $('#start').click(() => {
+      connect($('#name').val());
+      $('#start').html('Waiting for opponent...').prop('disabled', true);
+    });
+
+    $('#over').dialog({modal: true});
+  });
+
+  function connect(username) {
     connection = new WebSocket(websocketHost())
     connection.onopen = function () {
       console.log('Websocket connected');
+
+      connection.send(JSON.stringify({topic: 'join-game', data: {name: username}}));
 
       keepAlive();
       function keepAlive() {
@@ -31,7 +42,7 @@
         return 'ws://' + window.location.host;
       }
     }
-  });
+  }
 
   function resolve(payload) {
     switch(payload.topic) {
@@ -84,6 +95,8 @@
 
     initializePanel();
     initializePhagos();
+
+    $("#over").dialog("close");
   }
 
   function initializePanel() {

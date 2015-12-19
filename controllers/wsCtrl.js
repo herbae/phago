@@ -20,18 +20,18 @@ module.exports = (function() {
     });
   }
 
+  function joinGame(ws, name) {
+    ws.game = gameCtrl.joinGame(ws.id, name);
+    if(ws.game.p1 && ws.game.p2) {
+      broadcast(ws.game, 'new-game', ws.game);
+    }
+  }
+
   return {
     welcomeNewPlayer: function(ws) {
       ws.id = util.getRandom(10000, 90000); //TODO generate better id
       send(ws, 'your-id', ws.id);
       clients.push(ws);
-    },
-
-    joinGame: function(ws) {
-      ws.game = gameCtrl.joinGame(ws.id);
-      if(ws.game.p1 && ws.game.p2) {
-        broadcast(ws.game, 'new-game', ws.game);
-      }
     },
 
     shutdownGame: function(ws) {
@@ -42,6 +42,9 @@ module.exports = (function() {
     resolve: function(ws, strMessage) {
       var message = JSON.parse(strMessage);
       switch (message.topic) {
+        case 'join-game':
+          joinGame(ws, message.data.name);
+          break;
         case 'move':
           var player = ws.game.p1.id === ws.id ? 'p1' : 'p2';
           var clientMove = message.data;

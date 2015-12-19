@@ -8,7 +8,6 @@ exports.connect = function (server) {
   var wss = new ws.Server({server: server});
   wss.on('connection', (ws) => {
     wsCtrl.welcomeNewPlayer(ws);
-    wsCtrl.joinGame(ws);
 
     ws.on('message', function incoming(message) {
       wsCtrl.resolve(ws, message);
