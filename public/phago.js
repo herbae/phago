@@ -89,7 +89,7 @@
       thisPlayer = 'p2';
     }
     console.log('i am', thisPlayer);
-    $('#name-' + thisPlayer).addClass('active');
+    $('#name-' + game.activePlayer).addClass('active');
     $('#name-p1').text(game.p1.name);
     $('#name-p2').text(game.p2.name);
 
@@ -216,7 +216,9 @@
       $(element).addClass('ocupado' + player);
     }
 
+    $('#name-' + game.activePlayer).removeClass('active');
     game.activePlayer = player === 'p1' ? 'p2' : 'p1';
+    $('#name-' + game.activePlayer).addClass('active');
   }
 
   function limparJogada() {
