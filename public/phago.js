@@ -212,6 +212,7 @@
       var element = '#q' + move[i].position;
       $(element).removeClass('ocupadop1');
       $(element).removeClass('ocupadop2');
+      $(element).addClass('ocupado');
       $(element).addClass('ocupado' + player);
     }
 
