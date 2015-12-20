@@ -13,7 +13,7 @@
       $('#start').html('Waiting for opponent...').prop('disabled', true);
     });
 
-    $('#over').dialog({modal: true});
+    $('#over').dialog({modal: true, dialogClass: "no-close"});
   });
 
   function connect(username) {

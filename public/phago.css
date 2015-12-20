@@ -3,6 +3,10 @@ body {
   overflow-y: hidden;
 }
 
+.no-close .ui-dialog-titlebar-close {
+  display: none;
+}
+
 .titulo {
   font-size: 4em;
   text-align: center;
