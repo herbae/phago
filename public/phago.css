@@ -1,6 +1,7 @@
 body {
   font-family: 'Gloria Hallelujah', cursive;
   overflow-y: hidden;
+  font-size: 1.8vh;
 }
 
 .no-close .ui-dialog-titlebar-close {
@@ -11,6 +12,11 @@ body {
   font-size: 4em;
   text-align: center;
   padding: 0.5em 0 0;
+}
+
+.titulo img {
+  width: 5em;
+  height: auto;
 }
 
 .conteudo {
@@ -35,6 +41,7 @@ body {
 #p1 li {
   background-image: url(img/phago_bg_p1.png);
   background-repeat: no-repeat;
+  background-size: cover;
   display: none;
 }
 
@@ -52,6 +59,7 @@ body {
 #p2 li {
   background-image: url(img/phago_bg_p2.png);
   background-repeat: no-repeat;
+  background-size: cover;
   display: none;
 }
 
@@ -80,6 +88,8 @@ body {
   border-radius: 10px;
   -moz-border-radius: 10px;
   -webkit-border-radius: 10px;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .placar.player1{
