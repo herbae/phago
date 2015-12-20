@@ -10,7 +10,6 @@
   "author": "Iury",
   "license": "MIT",
   "dependencies": {
-    "bower": "^1.4.2",
     "express": "^4.13.3",
     "lodash": "^3.10.1",
     "ws": "^0.8.0"
