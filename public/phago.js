@@ -8,11 +8,6 @@
   var myId;
 
   $(window).load(() => {
-    setTimeout(() => {
-    		// Hide the address bar!
-    		window.scrollTo(0, 1);
-    	}, 0);
-
     $('#start').click(() => {
       connect($('#name').val());
       $('#start').html('Waiting for opponent...').prop('disabled', true);
