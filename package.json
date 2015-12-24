@@ -1,7 +1,7 @@
 {
   "name": "phago",
   "version": "1.0.0",
-  "description": "A math game involving viruses and bacteria.",
+  "description": "A joyful way to memorize the multiplication table.",
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
