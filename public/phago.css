@@ -4,10 +4,6 @@ body {
   font-size: 1.8vh;
 }
 
-.no-close .ui-dialog-titlebar-close {
-  display: none;
-}
-
 header {
   font-size: 4em;
   text-align: center;
@@ -184,4 +180,8 @@ main li {
 
 #helper {
   opacity: 0.8;
+}
+
+.no-close .ui-dialog-titlebar-close {
+  display: none;
 }
