@@ -8,18 +8,18 @@ body {
   display: none;
 }
 
-.titulo {
+header {
   font-size: 4em;
   text-align: center;
   padding: 0.5em 0 0;
 }
 
-.titulo img {
+header img {
   width: 5em;
   height: auto;
 }
 
-.conteudo {
+main {
   max-width: 60em;
   margin: 0 auto;
   padding-top: 1em;
@@ -28,39 +28,40 @@ body {
   position: relative;
 }
 
-.conteudo ul {
+main ul {
   vertical-align: top;
   width: 5em;
 }
 
-#p1 {
+main li {
+  display: inline-block;
+  cursor: pointer;
+  text-align: center;
+  color: white;
+}
+
+#phagos-p1 {
   float: left;
   clear: left;
 }
 
-#p1 li {
+#phagos-p1 li {
   background-image: url(img/phago_bg_p1.png);
-  background-repeat: no-repeat;
-  background-size: cover;
-  display: none;
 }
 
-.selecionado {
-  opacity: 0.8;
-  color: black !important;
-  font-weight: bold;
-}
-
-#p2 {
+#phagos-p2 {
   float: right;
   clear: right;
 }
 
-#p2 li {
+#phagos-p2 li {
   background-image: url(img/phago_bg_p2.png);
-  background-repeat: no-repeat;
-  background-size: cover;
-  display: none;
+}
+
+.selected {
+  opacity: 0.8;
+  color: black !important;
+  font-weight: bold;
 }
 
 .name {
@@ -78,7 +79,7 @@ body {
   border: 2px solid;
 }
 
-.placar {
+.score {
   width: 3em;
   margin: 0;
   margin-bottom: 0.5em;
@@ -92,11 +93,11 @@ body {
   background-size: cover;
 }
 
-.placar.player1{
-  background-image: url('img/placar_p1.png');
+.score.player1{
+  background-image: url('img/score_p1.png');
 }
-.placar.player2{
-  background-image: url('img/placar_p2.png');
+.score.player2{
+  background-image: url('img/score_p2.png');
 }
 
 .player1 {
@@ -111,18 +112,14 @@ body {
   color: #C1033B;
 }
 
-.conteudo li {
-  display: inline-block;
-  cursor: pointer;
-  text-align: center;
-  color: white;
-}
-
 .phagos li {
   width: 3em;
   height: 3em;
   line-height: 3em;
   font-size: 1.5em;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: none;
 }
 
 .noselect {
@@ -134,14 +131,14 @@ body {
   user-select: none;
 }
 
-#painel {
+#panel {
   margin: 0 auto;
   padding: 0;
   height: auto;
   text-align: center;
 }
 
-#painel li {
+#panel li {
   width: 2em;
   height: 2em;
   background-color: #F9F9F9;
@@ -158,24 +155,24 @@ body {
   transition: background-image 1s ease-in-out;
 }
 
-#painel .ui-selecting {
+#panel .ui-selecting {
   background: rgba(0, 0, 0, 0.2);
 }
 
-#painel .ocupadop1, #painel .ocupadop2 {
+#panel .takenp1, #panel .takenp2 {
   background-size: 2em 2em;
   background-repeat: no-repeat;
 }
 
-#painel .ocupadop1 {
+#panel .takenp1 {
   background-image: url(img/green.gif);
 }
 
-#painel .ocupadop2 {
+#panel .takenp2 {
   background-image: url(img/pink.gif);
 }
 
-#lados {
+#sides {
   z-index: 1;
   position: absolute;
   left: 50%;
@@ -185,6 +182,6 @@ body {
   font-size: 5em;
 }
 
-#conta {
+#helper {
   opacity: 0.8;
 }

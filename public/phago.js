@@ -1,6 +1,9 @@
 'use strict';
 
 (function () {
+  var PING_INTERVAL = 10 * 1000;
+  var FADE_OUT_TIME = 2 * 1000;
+
   var thisPlayer;
   var selectedPhago;
   var connection;
@@ -28,7 +31,7 @@
         setTimeout(() => {
           connection.send(JSON.stringify({topic: 'ping'}));
           keepAlive();
-        }, 10000);
+        }, PING_INTERVAL);
       }
     }
     connection.onmessage = function (e) {
@@ -73,8 +76,8 @@
   }
 
   function updateScore(score) {
-    $('#placar-p1').text(score.p1);
-    $('#placar-p2').text(score.p2);
+    $('#score-p1').text(score.p1);
+    $('#score-p2').text(score.p2);
   }
 
   function removePhago(phagoId) {
@@ -101,11 +104,11 @@
 
   function initializePanel() {
     for (var i = 1; i <= (game.sideSize * game.sideSize); i++) {
-      $('#painel').append('<li class="noselect" id="q' + i + '"></li>');
+      $('#panel').append('<li class="noselect" id="q' + i + '"></li>');
     }
-    $('#painel').css('width', (game.sideSize * 2) + 'em');
-    $('#painel li').addClass('image-transition');
-    $('#painel').selectable({
+    $('#panel').css('width', (game.sideSize * 2) + 'em');
+    $('#panel li').addClass('image-transition');
+    $('#panel').selectable({
       delay: 150,
       stop: realizarJogada,
       selecting: calcularTamanhoRetangulo,
@@ -120,7 +123,7 @@
         return;
       }
       var element = event.target;
-      if(element.parentNode.id === thisPlayer) {
+      if(element.parentNode.id === 'phagos-' + thisPlayer) {
         selectPhago(element);
       };
     });
@@ -138,7 +141,7 @@
 
   function pushPhago(player, phago) {
     var element = $('<li id="' + phago.id + '" class="noselect">' + phago.phago + '</li>');
-    $('#' + player).append(element);
+    $('#phagos-' + player).append(element);
     element.slideDown();
   }
 
@@ -157,8 +160,8 @@
     var x = lowerRight.x - upperLeft.x + 1;
     var y = lowerRight.y - upperLeft.y + 1;
 
-    $('#conta').text(x + " x " + y + " = " + x * y);
-    $('#conta').show();
+    $('#helper').text(x + " x " + y + " = " + x * y);
+    $('#helper').show();
   }
 
   function extrairPosicao(quadrado) {
@@ -174,9 +177,9 @@
 
   function selectPhago(phago) {
     selectedPhago = phago;
-    $('.phagos li').removeClass('selecionado');
-    $(phago).addClass('selecionado');
-    $('#painel').selectable('enable');
+    $('.phagos li').removeClass('selected');
+    $(phago).addClass('selected');
+    $('#panel').selectable('enable');
   }
 
   function realizarJogada(event) {
@@ -184,16 +187,16 @@
       return;
     }
 
-    $('#conta').fadeOut(2000);
+    $('#helper').fadeOut(FADE_OUT_TIME);
     var quadradosSelecionados = $('.ui-selected');
     var produtoSelecionado = $(selectedPhago).text();
     if(!(produtoSelecionado == quadradosSelecionados.size())
-      || quadradosSelecionados.hasClass('ocupado')) {
-      $('#painel li').removeClass('ui-selected');
+      || quadradosSelecionados.hasClass('taken')) {
+      $('#panel li').removeClass('ui-selected');
       return;
     };
 
-    var selecionados = $('#painel .ui-selected');
+    var selecionados = $('#panel .ui-selected');
 
     var move = [];
     for (var i = 0; i < selecionados.length; i++) {
@@ -210,10 +213,10 @@
   function renderMove(player, move) {
     for (var i = 0; i < move.length; i++) {
       var element = '#q' + move[i].position;
-      $(element).removeClass('ocupadop1');
-      $(element).removeClass('ocupadop2');
-      $(element).addClass('ocupado');
-      $(element).addClass('ocupado' + player);
+      $(element).removeClass('takenp1');
+      $(element).removeClass('takenp2');
+      $(element).addClass('taken');
+      $(element).addClass('taken' + player);
     }
 
     $('#name-' + game.activePlayer).removeClass('active');
@@ -223,7 +226,7 @@
 
   function limparJogada() {
     selectedPhago = undefined;
-    $('#painel li').removeClass('ui-selected');
-    $('#painel').selectable('disable');
+    $('#panel li').removeClass('ui-selected');
+    $('#panel').selectable('disable');
   }
 })();
