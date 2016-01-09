@@ -109,7 +109,6 @@
     $('#panel').css('width', (game.sideSize * 2) + 'em');
     $('#panel li').addClass('image-transition');
     $('#panel').selectable({
-      delay: 150,
       stop: realizarJogada,
       selecting: calcularTamanhoRetangulo,
       unselecting: calcularTamanhoRetangulo,
