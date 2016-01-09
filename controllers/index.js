@@ -4,6 +4,7 @@ var express = require('express');
 
 var app = module.exports = express.Router();
 
+//TODO: remover estes jquery do bower
 app.use(express.static('./bower_components/jquery/dist'));
 app.use(express.static('./bower_components/jquery-color'));
 app.use(express.static('./bower_components/jquery-ui'));

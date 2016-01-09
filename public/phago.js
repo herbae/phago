@@ -20,7 +20,7 @@
   });
 
   function connect(username) {
-    connection = new WebSocket(websocketHost())
+    connection = new WebSocket(websocketHost());
     connection.onopen = function () {
       console.log('Websocket connected');
 
@@ -196,6 +196,7 @@
       return;
     };
 
+//TODO: poderia usar a variável já declarada acima
     var selecionados = $('#panel .ui-selected');
 
     var move = [];
