@@ -1,24 +1,27 @@
+html {
+  font-size: 2vh;
+  min-width: 100vh;
+}
+
 body {
   font-family: 'Gloria Hallelujah', cursive;
-  overflow-y: hidden;
-  font-size: 1.8vh;
+  overflow: hidden;
 }
 
 header {
-  font-size: 4em;
   text-align: center;
-  padding: 0.5em 0 0;
+  padding: 0.5rem 0 0;
 }
 
 header img {
-  width: 5em;
+  width: 20rem;
   height: auto;
 }
 
 main {
-  max-width: 60em;
+  max-width: 60rem;
   margin: 0 auto;
-  padding-top: 1em;
+  padding-top: 1rem;
   text-align: center;
   overflow: hidden;
   position: relative;
@@ -26,7 +29,7 @@ main {
 
 main ul {
   vertical-align: top;
-  width: 5em;
+  width: 5rem;
 }
 
 main li {
@@ -61,14 +64,12 @@ main li {
 }
 
 .name {
-  width: 3em;
-  margin: 0 0 0.3em;
+  width: 6rem;
+  margin: 0 0 0.8rem;
   font-size: 2em;
   line-height: 2em;
   padding: 0;
-  border-radius: 10px;
-  -moz-border-radius: 10px;
-  -webkit-border-radius: 10px;
+  border-radius: 1rem;
 }
 
 .active {
@@ -76,15 +77,13 @@ main li {
 }
 
 .score {
-  width: 3em;
+  width: 6rem;
   margin: 0;
-  margin-bottom: 0.5em;
+  margin-bottom: 1rem;
   font-size: 2em;
   line-height: 2em;
   padding: 0;
-  border-radius: 10px;
-  -moz-border-radius: 10px;
-  -webkit-border-radius: 10px;
+  border-radius: 1rem;
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -109,8 +108,8 @@ main li {
 }
 
 .phagos li {
-  width: 3em;
-  height: 3em;
+  width: 4.5rem;
+  height: 4.5rem;
   line-height: 3em;
   font-size: 1.5em;
   background-repeat: no-repeat;
@@ -135,15 +134,13 @@ main li {
 }
 
 #panel li {
-  width: 2em;
-  height: 2em;
+  width: 2rem;
+  height: 2rem;
   background-color: #F9F9F9;
-  margin: -0.07em 0;
+  margin: -0.07rem 0;
   border: 1px solid #fff;
   box-sizing: border-box;
-  border-radius: 8px;
-  -moz-border-radius: 8px;
-  -webkit-border-radius: 8px;
+  border-radius: 0.5rem;
 }
 
 .image-transition {
@@ -156,7 +153,7 @@ main li {
 }
 
 #panel .takenp1, #panel .takenp2 {
-  background-size: 2em 2em;
+  background-size: 2rem 2rem;
   background-repeat: no-repeat;
 }
 
@@ -175,7 +172,7 @@ main li {
   top: 50%;
   transform: translate(-50%,-50%);
   -webkit-transform: translate(-50%,-50%);
-  font-size: 5em;
+  font-size: 5rem;
 }
 
 #helper {
