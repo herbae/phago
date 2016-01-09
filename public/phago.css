@@ -5,7 +5,7 @@ html {
 
 body {
   font-family: 'Gloria Hallelujah', cursive;
-  overflow: hidden;
+  overflow: auto;
 }
 
 header {
@@ -20,6 +20,7 @@ header img {
 
 main {
   max-width: 60rem;
+  min-width: 60rem;
   margin: 0 auto;
   padding-top: 1rem;
   text-align: center;
