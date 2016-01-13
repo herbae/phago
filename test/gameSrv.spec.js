@@ -8,9 +8,7 @@ describe('GameService', function() {
     var grid;
 
     beforeEach('Set up grid', function() {
-      var sideSize = 1;
-
-      grid = srv.createGame(sideSize).grid;
+      grid = [, [, {}]]; //phago 1x1 grid - 0 positions are discarded
     });
 
     it('should fill the grid with a simple 1x1 move', function () {
@@ -18,7 +16,7 @@ describe('GameService', function() {
       var move = [{x: 1, y: 1}];
 
       srv.move(player, move, grid);
-      expect(grid[1][1]).to.deep.equal({player: 'p1', position: 1});
+      expect(grid[1][1]).to.deep.equal({player: 'p1'});
     });
   });
 });
