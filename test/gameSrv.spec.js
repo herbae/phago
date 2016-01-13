@@ -22,5 +22,13 @@ describe('GameService', function() {
       srv.move(player, move, grid);
       expect(grid[1][1]).to.deep.equal({player: 'p1'});
     });
+
+    it('should allow player 2 to make a simple move as well', function () {
+      var player = 'p2';
+      var move = [{x: 1, y: 1}];
+
+      srv.move(player, move, grid);
+      expect(grid[1][1]).to.deep.equal({player: 'p2'});
+    });
   });
 });
