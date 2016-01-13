@@ -4,12 +4,14 @@
   "description": "A fun way to memorize the multiplication table.",
   "main": "index.js",
   "scripts": {
+    "prestart": "browserify ./public/phago.js -o ./public/bundle.js",
     "start": "node server.js",
     "test": "mocha test/"
   },
   "author": "Iury",
   "license": "MIT",
   "dependencies": {
+    "browserify": "^13.0.0",
     "express": "^4.13.3",
     "jquery": "^2.2.0",
     "jquery-ui-browserify": "^1.11.0-pre-seelio",
