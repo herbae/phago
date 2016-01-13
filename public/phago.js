@@ -1,6 +1,11 @@
 'use strict';
 
 (function () {
+  var $ = require('jquery');
+  require('jquery-ui-browserify');
+  require('./jquery.ui.touch-punch.min');
+  require('./jquery.color-2.1.2.min');
+
   var PING_INTERVAL = 10 * 1000;
   var FADE_OUT_TIME = 2 * 1000;
 
