@@ -17,10 +17,12 @@ exports.move = function(player, move, grid) {
   return totalMove;
 }
 
-exports.createGame = function() {
+exports.createGame = function(sideSize) {
+  sideSize = sideSize || 20;
+
   var game = {
     id: 1,
-    sideSize: 20,
+    sideSize: sideSize,
     phagoQuantity: 7,
     level: 10,
     activePlayer: 'p1'

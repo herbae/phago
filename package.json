@@ -1,11 +1,11 @@
 {
   "name": "phago",
   "version": "1.0.0",
-  "description": "A joyful way to memorize the multiplication table.",
+  "description": "A fun way to memorize the multiplication table.",
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha test/"
   },
   "author": "Iury",
   "license": "MIT",
@@ -13,5 +13,9 @@
     "express": "^4.13.3",
     "lodash": "^3.10.1",
     "ws": "^0.8.0"
+  },
+  "devDependencies": {
+    "chai": "^3.4.1",
+    "mocha": "^2.3.4"
   }
 }
