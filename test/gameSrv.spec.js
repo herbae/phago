@@ -8,7 +8,11 @@ describe('GameService', function() {
     var grid;
 
     beforeEach('Set up grid', function() {
-      grid = [, [, {}]]; //phago 1x1 grid - 0 positions are discarded
+      //phago 2x2 grid - positions (0,0), (0,1), (1,0) are discarded
+      grid = [,
+        [, {}, {}],
+        [, {}, {}]
+      ];
     });
 
     it('should fill the grid with a simple 1x1 move', function () {
