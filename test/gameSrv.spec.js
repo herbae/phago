@@ -44,9 +44,16 @@ describe('GameService', function() {
       ]);
     });
 
-    it('should not allow player to fill position outside the grid', function () {
+    it('should not allow player to fill y position outside the grid', function () {
       var player = 'p1';
       var move = [{x:1, y:3}];
+
+      expect(srv.move.bind(srv, player, move, grid)).to.throw('Invalid move');
+    });
+
+    it('should not allow player to fill x position outside the grid', function () {
+      var player = 'p1';
+      var move = [{x:4, y:2}];
 
       expect(srv.move.bind(srv, player, move, grid)).to.throw('Invalid move');
     });

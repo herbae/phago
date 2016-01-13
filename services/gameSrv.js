@@ -6,7 +6,7 @@ exports.getRandomPhago = phagoFactory();
 
 exports.move = function(player, move, grid) {
   for (var i = 0; i < move.length; i++) {
-    if(move[i].y >= grid.length) {
+    if(move[i].y >= grid.length || move[i].x >= grid[1].length) {
       throw (new Error('Invalid move'));
     }
     grid[move[i].y][move[i].x].player = player;
