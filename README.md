@@ -14,3 +14,7 @@ install mocha globally (npm install -g mocha)
 npm test or mocha
 
 Simple as that.
+
+You can test a working release at Heroku: http://phago.herokuapp.com. Since Phago has no IA yet, you will probably need two browser windows to actually make any moves.
+
+Have fun!
