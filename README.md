@@ -1,4 +1,7 @@
 # phago
+
+[![Code Climate](https://codeclimate.com/github/herbae/phago/badges/gpa.svg)](https://codeclimate.com/github/herbae/phago)
+
 A math game involving bacteria and viruses.
 
 You must have Node > 4.x.x installed, since phago uses ECMAScript 6.
